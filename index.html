@@ -249,15 +249,57 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 .mthud{display:flex;gap:14px;align-items:center;margin:8px 0}.mtp{display:flex;flex-direction:column;align-items:center;min-width:92px}.mtp span{font:800 34px var(--fb)}.mtp small{font-size:11px;color:var(--mute)}.mtm{flex:1}.mtbarw{height:14px;border-radius:99px;background:var(--chip);overflow:hidden}.mtbarw i{display:block;height:100%;width:0;border-radius:99px;transition:width .15s}.mtbarw i.g{background:#12A38A}.mtbarw i.y{background:#F5B301}.mtbarw i.r{background:#E5484D}.mtl{display:flex;justify-content:space-between;font-size:13px;margin-top:6px;color:var(--mute)}.mtl #mtst{color:#E0A100;letter-spacing:2px}
 .ancue:empty{display:none}#mtgo{width:100%;padding:15px;font-size:18px;font-weight:700;border:0;border-radius:18px;color:#fff;background:linear-gradient(150deg,#12A38A,#16407E);box-shadow:0 14px 24px -14px rgba(22,64,126,.8)}#mtgo:hover{filter:brightness(1.06)}.adapt h3{margin:0 0 2px;color:var(--ink);font-size:16px}.adapt .cap{margin:0}.mtr{text-align:center;margin:10px 0}.mtstars{font-size:40px;color:#E0A100;letter-spacing:6px}.mtr .row{justify-content:center}
 .pmst{margin:10px 0 8px;padding:11px 14px;border-radius:14px;background:var(--chip);font-weight:600;font-size:14px}.pmst.ok{background:var(--acc-soft);color:var(--acc)}.pmst.warn{background:color-mix(in srgb,#F5B301 18%,var(--card));color:var(--ink)}.pmst.err{background:color-mix(in srgb,var(--bad) 14%,var(--card));color:var(--bad)}.pmst.busy{background:var(--chip)}
+/* ===== Dunkles, modernes Design ===== */
+:root,:root[data-theme=light],:root[data-theme=dark]{color-scheme:dark;--bg:#0B0C0F;--card:#16181D;--ink:#F3F4F6;--mute:#8E94A0;--line:#262932;--chip:#1E2127;--ok:#3DE0C4;--acc:#FF9A3D;--acc-soft:#2A2118;--bad:#FF5A6E}
+html,body{background:#0B0C0F;color:#F3F4F6}
+.card,section.card,details.card{background:#16181D;border:1px solid #20232A;border-radius:20px;box-shadow:none}
+.bnav{background:rgba(16,17,21,.92);backdrop-filter:blur(14px);border-top:1px solid #20232A}
+.bnav button[aria-current=page]{color:#3DE0C4}
+.hero{background:linear-gradient(135deg,#17262B,#16181D 70%);border:1px solid #20232A;box-shadow:none}
+.hero h1{font-size:24px;line-height:1.2}
+.cta,.pl{background:linear-gradient(90deg,#3DE0C4,#1FB8A0);color:#04201B;border:0;font-weight:700}
+.ghost{background:#1E2127;color:#F3F4F6;border:1px solid #2A2D34}
+.tabs.seg,.pgtabs{background:#16181D;border-radius:999px;padding:4px;display:flex;gap:4px;border:1px solid #20232A}
+.tabs.seg button,.pgtabs button{flex:1;border:0;background:transparent;color:#8E94A0;border-radius:999px;padding:9px 6px;font-weight:600;font-size:14px}
+.tabs.seg button[aria-pressed=true],.pgtabs button[aria-pressed=true]{background:#fff;color:#0B0C0F}
+.hs3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0}
+.hs3 button{background:#16181D;border:1px solid #20232A;border-radius:18px;padding:12px 6px;color:#F3F4F6;display:flex;flex-direction:column;align-items:center;gap:2px}
+.hs3 b{font-size:20px}.hs3 small{color:#8E94A0;font-size:12px}
+.hsi,.mi,.pbi{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:color-mix(in srgb,var(--c) 18%,#16181D);font-size:16px}
+.qa{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.qa button{background:#16181D;border:1px solid #20232A;color:#F3F4F6;border-radius:16px}
+.pgh{margin:18px 2px 8px;font-size:17px}
+.miles{display:grid;gap:10px}
+.mile{background:#16181D;border:1px solid #20232A;border-radius:20px;padding:14px;display:grid;grid-template-columns:34px 1fr;column-gap:12px;row-gap:2px}
+.mile .mi{grid-row:span 3}.mile b{font-size:22px}.mile small{color:#8E94A0}.mile em{grid-column:2;font-style:normal;color:#8E94A0;font-size:12px}
+.mbar{grid-column:2;height:8px;background:#262932;border-radius:99px;overflow:hidden;margin:6px 0 2px}.mbar i{display:block;height:100%;border-radius:99px}
+.pwk .pwh{display:flex;justify-content:space-between;margin-bottom:10px}.pwk .pwh span{color:#8E94A0}
+.pwb{display:flex;gap:8px;align-items:flex-end;height:110px}.pwc{flex:1;height:100%;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:4px}
+.pwc i{width:100%;border-radius:8px;background:#262932;display:block}.pwc i.on{background:#2B6F66}.pwc i.now{background:#3DE0C4}.pwc small{color:#8E94A0;font-size:11px}
+.pb .pbr{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid #20232A}.pb .pbr:last-child{border:0}.pb .pbr span:nth-child(2){flex:1}
+.mglink{display:flex;align-items:center;gap:12px;width:100%;margin-top:16px;background:#16181D;border:1px dashed #2A2D34;border-radius:18px;padding:12px;color:#F3F4F6;text-align:left}
+.mglink small{display:block;color:#8E94A0}.mglink i{margin-left:auto;color:#8E94A0;font-style:normal;font-size:20px}
+.pgsvg{width:100%;height:auto;display:block}.pgct{display:flex;justify-content:space-between;margin-bottom:6px}.pgct span{color:#8E94A0;font-size:13px}
+.pgc{margin-bottom:10px}.trr{display:flex;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid #20232A}.trr small{display:block;color:#8E94A0}
+.chg{align-self:center;padding:4px 10px;border-radius:99px;font-size:12px;font-weight:700;background:#262932}.chg.good{background:#12332D;color:#3DE0C4}.chg.bad{background:#3A1A20;color:#FF7A8A}
+.focus{border-color:#2B6F66;background:linear-gradient(135deg,#12332D,#16181D)}.focus small{color:#3DE0C4}.focus b{display:block;font-size:18px;margin:2px 0 6px}
+.cmpq{flex-wrap:wrap;margin-bottom:8px}.cmpq button{font-size:13px;border-radius:99px;padding:7px 12px;background:#1E2127;color:#F3F4F6;border:1px solid #2A2D34}
+.cmpsel{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}.cmpsel label{display:flex;flex-direction:column;font-size:12px;color:#8E94A0;gap:4px}.cmpsel label{min-width:0}.cmpsel select{width:100%;background:#16181D;color:#F3F4F6;border:1px solid #2A2D34;border-radius:12px;padding:8px;font-size:12px;min-width:0}
+.cmpbig{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}.cmpbig .card{display:flex;flex-direction:column;gap:4px}.cmpbig b{font-size:28px}.cmpbig small,.cmpbig span{color:#8E94A0;font-size:12px}.cmpbig .now{border-color:#2B6F66}
+.ant td.besser{color:#3DE0C4}.ant td.schlechter{color:#FF7A8A}
+.achh{margin-bottom:12px}.achh b{font-size:24px}.achh span{color:#8E94A0;margin-left:6px}
+.achg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ach{background:#16181D;border:1px solid #20232A;border-radius:18px;padding:12px;opacity:.5;display:flex;flex-direction:column;gap:2px}.ach.on{opacity:1;border-color:#2B6F66}.ach span{font-size:24px;filter:grayscale(1)}.ach.on span{filter:none}.ach small{color:#8E94A0;font-size:12px}
+.empty p{color:#8E94A0}
+.backmt{background:transparent;border:0;color:#3DE0C4;padding:4px 0;font-weight:600}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
 <main>
 <div class="page" id="p-today">
-<section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-go="plan">▶ Heute trainieren</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"></div></section>
-<div class="ctiles" role="group" aria-label="Kamera-Funktionen"><button data-cmgo="pose"><span class="ti">🎯</span><b>Live-Analyse</b><small>Sprachhinweise im Handstand</small></button><button data-cmgo="match"><span class="ti">🎮</span><b>Handstand-Match</b><small id="mtsum">Pose nachmachen, Sterne sammeln</small></button><button data-cmgo="file"><span class="ti">🎞</span><b>Video prüfen</b><small>Aufnahme analysieren</small></button></div>
+<section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-cmgo="file">🎞 Video prüfen</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"></div></section>
+<div class="hs3" id="hs3"></div>
 <section class="card adapt" id="adapt"></section>
-<div class="qa" role="group" aria-label="Training"><button data-pg="cal"><span class="ti">📅</span>Kalender</button><button data-t="beg"><span class="ti">🌱</span>Anfänger</button><button data-t="adv"><span class="ti">🔥</span>Fortgeschritten</button><button data-pg="lib"><span class="ti">📚</span>Übungen</button></div>
+<div class="qa" role="group" aria-label="Training"><button data-pg="cal"><span class="ti">📅</span>Kalender</button><button data-pg="prog"><span class="ti">📈</span>Fortschritt</button><button data-t="beg"><span class="ti">🌱</span>Lernen</button><button data-pg="lib"><span class="ti">📚</span>Übungen</button></div>
 <section class="card nxt" id="nxt"></section>
 <section class="plan" id="plan"><div class="ph"><h2>Heute dran</h2><span id="pc"></span></div><p class="psub" id="psub"></p><div class="bar"><i id="pb"></i></div><div id="plbody"></div></section>
 <button class="strip" id="mini" data-pg="cal" aria-label="Kalender öffnen"></button>
@@ -317,7 +359,7 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 </div>
 <div class="page" id="p-cam" hidden>
 <h1 class="pgt">📹 Kamera</h1>
-<div class="tabs seg" id="cmode"><button data-cm="pose" aria-pressed="true">🎯 Analyse</button><button data-cm="match" aria-pressed="false">🎮 Match</button><button data-cm="hist" aria-pressed="false">📈 Verlauf</button><button data-cm="prem" aria-pressed="false">⭐ Foto-KI</button></div>
+<div class="tabs seg" id="cmode"><button data-cm="pose" aria-pressed="true">🎯 Analyse</button><button data-cm="hist" aria-pressed="false">📈 Verlauf</button><button data-cm="prem" aria-pressed="false">⭐ Foto-KI</button></div>
 <section id="cview"><div class="pmw" id="pmw"><div class="pmm" id="pmm"><video id="pmv" playsinline muted></video><canvas id="pmc"></canvas></div><div class="mtbig" id="mtbig" aria-hidden="true"></div></div>
 <div class="pmst" id="pmst" role="status" aria-live="polite">Bereit. Tippe auf „Kamera starten“.</div>
 <div class="row"><button class="pl" id="pmb1" data-pm="start">📹 Kamera starten</button><button id="pmb2" data-pm="stop" hidden>Kamera beenden</button><button id="pmb3" data-pm="flip" hidden>Kamera wechseln</button><button id="pmb4" data-pm="retry" hidden>Erkennung erneut starten</button></div></section>
@@ -331,7 +373,7 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 <details class="card"><summary>💡 Tipps für bessere Erkennung</summary><ul class="feat"><li>Enge, einfarbige Kleidung, die sich vom Hintergrund abhebt. Weite Shirts verdecken Ellenbogen und Schultern.</li><li>Helles, gleichmäßiges Licht von vorn, kein Gegenlicht.</li><li>Handy fest aufstellen, ganzer Körper von den Händen bis zu den Füßen im Bild, etwas Abstand zum Rand.</li><li>Von der Seite sieht die App Hohlkreuz, Knie und Kopf, von vorn oder hinten dagegen offene Beine.</li></ul></details>
 <details class="card"><summary>🎞 Aufnahme prüfen (Video aus der Galerie)</summary><div class="anbox"><p class="cap">Lade ein vorhandenes Video. Die App analysiert es auf deinem Gerät, es wird nichts hochgeladen. Mit den Messdaten lassen sich die Grenzwerte genauer einstellen.</p><div class="row"><button id="anfile">Video auswählen</button><button id="anexp" hidden>Messdaten exportieren</button><input type="file" id="anvf" accept="video/*" hidden></div><div class="cap" id="andiag"></div></div></details>
 <p class="cap">Die Analyse ist eine Schätzung aus einer 2D-Kamera. Sie misst Winkel und Linien, keine Kräfte, und sagt keine Stürze voraus. Übe bei Unsicherheit an der Wand oder mit Partner und sorge für freien Platz und weichen Untergrund.</p></section>
-<section id="cmatch" hidden><p class="cap">Mach die Pose nach. Je besser du passt, desto mehr Punkte. Die Figur im Kamerabild zeigt dir das Ziel.</p>
+<section id="cmatch" hidden><button class="backmt" data-cmgo="pose">‹ Zurück zur Analyse</button><h3 style="margin:4px 0">🎮 Minigame: Handstand-Match</h3><p class="cap">Mach die Pose nach. Je besser du passt, desto mehr Punkte. Die Figur im Kamerabild zeigt dir das Ziel.</p>
 <div class="mtlv" id="mtlv"></div>
 <div class="card mtt"><canvas id="mtcv" width="150" height="190" aria-label="Zielpose"></canvas><div><h3 id="mtn"></h3><p id="mts"></p><p class="cap" id="mth"></p></div></div>
 <div class="mthud"><div class="mtp"><span id="mtpct">–</span><small>Übereinstimmung</small></div><div class="mtm"><div class="mtbarw"><i id="mtbar"></i></div><div class="mtl"><span id="mttime"></span><span id="mtpts"></span><span id="mtst"></span></div></div></div>
@@ -353,6 +395,11 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 </section>
 </div>
 </div>
+<div class="page" id="p-prog" hidden>
+<h1 class="pgt">📈 Fortschritt</h1>
+<div class="pgtabs tabs" id="pgtabs"><button data-pgt="ov" aria-pressed="true">Übersicht</button><button data-pgt="te" aria-pressed="false">Technik</button><button data-pgt="cp" aria-pressed="false">Vergleich</button><button data-pgt="ac" aria-pressed="false">Erfolge</button></div>
+<div id="pgbody" style="margin-top:14px"></div>
+</div>
 <div class="page" id="p-me" hidden>
 <h1 class="pgt">👤 Ich</h1>
 <div class="chips nav2"><button data-sc="mood">Tagesform</button><button data-sc="warm">Warm-up</button><button data-sc="notes">Notizen</button><button data-sc="mgoals">Ziele</button><button data-sc="stats">Statistik</button><button data-sc="pause">Pausen</button></div>
@@ -369,7 +416,7 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 <h2>Rangliste</h2><section class="card" id="bd"></section>
 </div>
 </main>
-<nav class="bnav" aria-label="Hauptnavigation"><button data-pg="today" aria-current="page"><span class="ico">🏠</span>Heute</button><button data-pg="learn" aria-current="false"><span class="ico">🎓</span>Lernen</button><button data-pg="cam" class="camb" aria-current="false"><span class="ico">📹</span>Kamera</button><button data-pg="lib" aria-current="false"><span class="ico">📚</span>Übungen</button><button data-pg="me" aria-current="false"><span class="ico">👤</span>Ich</button></nav>
+<nav class="bnav" aria-label="Hauptnavigation"><button data-pg="today" aria-current="page"><span class="ico">🏠</span>Heute</button><button data-pg="learn" aria-current="false"><span class="ico">🎓</span>Lernen</button><button data-pg="cam" class="camb" aria-current="false"><span class="ico">📹</span>Kamera</button><button data-pg="prog" aria-current="false"><span class="ico">📈</span>Fortschritt</button><button data-pg="me" aria-current="false"><span class="ico">👤</span>Ich</button></nav>
 <div id="prof" class="onb" role="dialog" aria-modal="true" aria-labelledby="proft" hidden><div class="onbin"><span class="eyebrow">Willkommen</span><h1 id="proft">Wie heißt du?</h1><p>Name und Alter bleiben nur auf diesem Gerät gespeichert, ohne Übermittlung und Tracking. Das Alter nutzen wir später für passende Trainingshinweise.</p>
 <label class="pfl" for="pn">Dein Name</label><input id="pn" class="pfi" type="text" maxlength="30" autocomplete="given-name" placeholder="z. B. Anna">
 <label class="pfl" for="pa">Dein Alter</label><input id="pa" class="pfi" type="number" inputmode="numeric" min="5" max="99" step="1" placeholder="z. B. 24">
@@ -736,9 +783,9 @@ function pickVoice(){try{const all=speechSynthesis.getVoices().filter(x=>/^de/i.
 function say(t,force){try{if(speechSynthesis.speaking){if(!force)return;speechSynthesis.cancel()}const u=new SpeechSynthesisUtterance(t);u.lang="de-DE";u.rate=.95;u.pitch=1;u.volume=1;const v=pickVoice();if(v)u.voice=v;speechSynthesis.speak(u)}catch(e){}}
 function moodAdj(){const m=st.mood[tdk()];if(!m||!m.e||!m.w||!m.s)return 0;const a=(m.e+m.w+m.s)/3;return a<=2?-1:a>=4.3?1:0}
 // ---- Seiten
-const PAGES=["today","cal","learn","lib","cam","me"];
+const PAGES=["today","cal","learn","lib","cam","prog","me"];
 function showPage(p){if(p!=="cam"){if(typeof pmStop==="function")pmStop(true);if(typeof camStopClaude==="function")camStopClaude()}PAGES.forEach(x=>{$("p-"+x).hidden=x!==p});$$(".bnav [data-pg]").forEach(b=>b.setAttribute("aria-current",b.dataset.pg===(p==="cal"?"today":p)?"page":"false"));
- if(p==="today"){renderTrain();drawPlan()}if(p==="cal"){renderWeek();drawCal();renderLP()}if(p==="lib")renderLib();if(p==="cam")renderCam();if(p==="me"){renderMe();loadBoard()}if(typeof scrollTo==="function")scrollTo(0,0)}
+ if(p==="today"){renderTrain();drawPlan()}if(p==="cal"){renderWeek();drawCal();renderLP()}if(p==="lib")renderLib();if(p==="cam")renderCam();if(p==="prog")renderProg();if(p==="today")renderHomeStats();if(p==="me"){renderMe();loadBoard()}if(typeof scrollTo==="function")scrollTo(0,0)}
 function showTab(t){if(t==="train"||t==="today"){showPage("today");return}showPage("learn");$("beg").hidden=t!=="beg";$("adv").hidden=t!=="adv";$$("#lt [data-t]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.t===t))}
 const GOM={plan:["today","plan"],today:["today","plan"],goals:["today","goals"],timer:["today","timer"],cam:["cam","p-cam"],steps:["learn","steps","beg"],tips:["learn","tips","beg"],beg:["learn","steps","beg"],adv:["learn","adv","adv"],lib:["lib","p-lib"],me:["me","p-me"],mood:["me","mood"],warm:["me","warm"],notes:["me","notes"],stats:["me","stats"],mgoals:["me","mgoals"],wk:["cal","wkd"],cal:["cal","p-cal"]};
 function goTo(id){closeSheet(true);const g=GOM[id]||["today",id];if(g[2])showTab(g[2]);else showPage(g[0]);if(id==="wk"&&$("wkd"))$("wkd").open=true;const el=$(g[1]);if(!el)return;el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});el.classList?.remove?.("flash");void el.offsetWidth;el.classList?.add?.("flash")}
@@ -1217,7 +1264,7 @@ var ANK="hs-an-v1",ATK="hs-att-v1";
 function anLoadCfg(){try{var o=JSON.parse(localStorage.getItem(ANK)||"{}");if(o.style&&AN.STY[o.style])ANS.cfg.style=o.style;if(o.strict&&AN.STRICT[o.strict])ANS.cfg.strict=o.strict;if(o.voice===false)ANS.voice=false;if(o.sum===false)ANS.sum=false;if(o.rec===true)ANS.rec=true;if(o.precise===true)ANS.cfg.precise=true;if(typeof o.vuri==="string")ANS.voiceURI=o.vuri}catch(e){}}
 function anSaveCfg(){try{localStorage.setItem(ANK,JSON.stringify({style:ANS.cfg.style,strict:ANS.cfg.strict,voice:ANS.voice,sum:ANS.sum,rec:ANS.rec,precise:!!ANS.cfg.precise,vuri:ANS.voiceURI||""}))}catch(e){}}
 function anAtt(){try{var a=JSON.parse(localStorage.getItem(ATK)||"[]");return Array.isArray(a)?a:[]}catch(e){return[]}}
-function anSaveAtt(a){try{localStorage.setItem(ATK,JSON.stringify(a.slice(-40)));return true}catch(e){return false}}
+function anSaveAtt(a){try{localStorage.setItem(ATK,JSON.stringify(a.slice(-120)));return true}catch(e){return false}}
 function anUI(){var s=$("anst");if(!s||s.dataset.i)return;s.dataset.i=1;
  s.innerHTML=Object.keys(AN.STY).map(k=>'<option value="'+k+'">'+AN.STY[k].n+'</option>').join("");s.value=ANS.cfg.style;$("anse").value=ANS.cfg.strict;$("anvo").checked=ANS.voice;$("ansu").checked=ANS.sum;$("anrec").checked=ANS.rec;$("anpre").checked=!!ANS.cfg.precise;$("anpre").onchange=()=>{ANS.cfg.precise=$("anpre").checked;anSaveCfg()};
  const fillV=()=>{const sel=$("anvs");if(!sel)return;let vs=[];try{vs=speechSynthesis.getVoices().filter(x=>/^de/i.test(x.lang))}catch(e){}const best=pickVoice();sel.innerHTML='<option value="">Automatisch'+(best&&!ANS.voiceURI?' ('+best.name+')':'')+'</option>'+vs.map(v=>'<option value="'+v.voiceURI+'">'+v.name+'</option>').join("");sel.value=ANS.voiceURI||""};
@@ -1273,14 +1320,14 @@ function anMark(l,r){const c=$("pmc");if(!c||!l||!r||!r.m)return;const g=c.getCo
  const J={hipArch:[23,24],hipBack:[23,24],shoulder:[11,12],elbow:[13,14],knee:[25,26],legs:[27,28],toes:[31,32],sway:[11,12],tilt:[27,28]};
  g.lineWidth=4*d;g.strokeStyle="#FF4D5E";for(const k in r.active){(J[k]||[]).forEach(i=>{const p=l[i];if(!p||(p.visibility!=null&&p.visibility<.5))return;g.beginPath();g.arc(p.x*W,p.y*H,12*d,0,Math.PI*2);g.stroke()})}}
 function anDiag(){const s=ANS.stat,e=$("andiag");if(!e||!s.n)return;e.textContent="Erkennung: "+Math.round(100*s.det/s.n)+" % der Bilder, davon "+Math.round(100*s.rot/Math.max(1,s.det))+" % mit gedrehtem Bild · analysefähig: "+Math.round(100*s.qok/s.n)+" % · "+s.n+" Bilder"+(s.n>=60&&s.qok/s.n<.5?" · Erkennung unsicher: Licht, enge Kleidung und ganzer Körper im Bild helfen":"")+(s.why&&s.qok/s.n<.9?(()=>{const k=Object.keys(s.why).sort((a,b)=>s.why[b]-s.why[a])[0];return k?" · häufigster Grund für fehlende Analyse: "+k:""})():"")+(ANS.lastR&&ANS.lastR.view?" · Ansicht: "+({front:"von vorn/hinten",side:"von der Seite",mixed:"unklar (nur sichere Hinweise)"})[ANS.lastR.view]:"")}
-function anFinish(rec){if(!rec)return;const a=anAtt();let vid=ANS.lastVid||null;ANS.lastVid=null;if(vid)rec.vid=vid;a.push(rec);if(!anSaveAtt(a))anCue("Versuch konnte nicht gespeichert werden (Speicher voll?).","cue");
+function anFinish(rec){if(!rec)return;const a=anAtt();let vid=ANS.lastVid||null;ANS.lastVid=null;if(vid)rec.vid=vid;a.push(rec);try{pgCount(rec)}catch(x){}if(!anSaveAtt(a))anCue("Versuch konnte nicht gespeichert werden (Speicher voll?).","cue");
  anCue("Fertig: "+Math.round(rec.dur)+" s, Linien-Score "+rec.score+(rec.top.length?" – häufigster Punkt: "+AN.ERR[rec.top[0]].name:""),"ok");
  if(ANS.sum)anSpeak(ANS.an.summary(rec));anAttList()}
 function anAttList(){const e=$("anatt");if(!e)return;const a=anAtt().slice().reverse().slice(0,8);
  if(!a.length){e.innerHTML='<p class="cap">Noch keine Versuche. Sobald die App einen Handstand von mindestens 1,5 Sekunden erkennt, wird er hier lokal gespeichert.</p>';return}
  e.innerHTML=a.map(r=>'<div class="card anr"><b>'+new Date(r.date).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})+'</b> · '+(AN.STY[r.style]?AN.STY[r.style].n:r.style)+'<br>Halten <b>'+r.dur.toFixed(1)+' s</b> · Linien-Score <b>'+r.score+'</b>'+(r.top&&r.top.length?'<br><span class="cap">Häufigste Punkte: '+r.top.map(k=>AN.ERR[k]?AN.ERR[k].name:k).join(", ")+'</span>':'')+(r.vid?'<br><button data-anvid="'+r.vid+'">▶ Video</button>':'')+'</div>').join("")+'<div class="row"><button data-ancmp="1">Letzte zwei Versuche vergleichen</button><button data-andel="1">Alle Versuche löschen</button></div><div id="ancmp"></div>'}
 function anCompare(){const a=anAtt(),e=$("ancmp");if(!e)return;if(a.length<2){e.innerHTML='<p class="cap">Für einen Vergleich brauchst du mindestens zwei gespeicherte Versuche.</p>';return}
- const rows=AN.compare(a[a.length-2],a[a.length-1]);e.innerHTML='<table class="ant"><tr><th></th><th>Vorher</th><th>Jetzt</th><th>Änderung</th></tr>'+rows.map(r=>{const g=r.d*r.better>0.0001?"besser":(r.d*r.better<-0.0001?"schlechter":"gleich");return'<tr><td>'+r.n+'</td><td>'+r.a.toFixed(1)+'</td><td>'+r.b.toFixed(1)+'</td><td class="'+g+'">'+(r.d>=0?"+":"")+r.d.toFixed(1)+' '+r.u+' ('+g+')</td></tr>'}).join("")+'</table><p class="cap">Verglichen werden nur gespeicherte Messwerte dieser beiden Versuche. Unterschiedliche Kamerawinkel oder Stile machen den Vergleich weniger aussagekräftig.</p>'}
+ const rows=AN.compare(a[a.length-2],a[a.length-1]);e.innerHTML='<table class="ant"><tr><th></th><th>Vorher</th><th>Jetzt</th><th>Änderung</th></tr>'+rows.map(r=>{const g=r.d*r.better>0.0001?"besser":(r.d*r.better<-0.0001?"schlechter":"gleich");return'<tr><td>'+r.n+'</td><td>'+(+r.a||0).toFixed(1)+'</td><td>'+(+r.b||0).toFixed(1)+'</td><td class="'+g+'">'+(r.d>=0?"+":"")+(+r.d||0).toFixed(1)+' '+r.u+' ('+g+')</td></tr>'}).join("")+'</table><p class="cap">Verglichen werden nur gespeicherte Messwerte dieser beiden Versuche. Unterschiedliche Kamerawinkel oder Stile machen den Vergleich weniger aussagekräftig.</p>'}
 /* Video lokal (IndexedDB) */
 function idb(){return new Promise((res,rej)=>{try{const q=indexedDB.open("hs-vid",1);q.onupgradeneeded=()=>q.result.createObjectStore("v");q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)}catch(e){rej(e)}})}
 async function anVidPut(k,b){const d=await idb();await new Promise((res,rej)=>{const t=d.transaction("v","readwrite");t.objectStore("v").put(b,k);t.oncomplete=res;t.onerror=()=>rej(t.error)});const ks=await new Promise(r=>{const q=d.transaction("v").objectStore("v").getAllKeys();q.onsuccess=()=>r(q.result)});for(const x of ks.slice(0,Math.max(0,ks.length-4)))d.transaction("v","readwrite").objectStore("v").delete(x)}
@@ -1399,9 +1446,83 @@ anLoadCfg();
 
 var _pmStop0=pmStop;pmStop=function(s){anStop();mtReset();_pmStop0(s)};
 
+/* ===== Fortschritt: Meilensteine, Technik-Entwicklung, Vergleich, Erfolge ===== */
+var PG={tab:"ov",a:-1,b:-1},PGSTAT="hs-stat-v1";
+function pgCounter(){try{var o=JSON.parse(localStorage.getItem(PGSTAT)||"{}");return{n:+o.n||0,dur:+o.dur||0}}catch(e){return{n:0,dur:0}}}
+function pgCount(rec){var c=pgCounter();c.n++;c.dur+=rec.dur;try{localStorage.setItem(PGSTAT,JSON.stringify(c))}catch(e){}}
+function fmtS(v){v=+v||0;if(v<60)return(Math.round(v*10)/10).toString().replace(".",",")+" s";var m=Math.floor(v/60),s=Math.round(v%60);return m+":"+(s<10?"0":"")+s+" min"}
+function pgDate(ms){return new Date(ms).toLocaleDateString("de-DE",{day:"2-digit",month:"2-digit"})}
+function pgDT(ms){return new Date(ms).toLocaleString("de-DE",{day:"2-digit",month:"2-digit",hour:"2-digit",minute:"2-digit"})}
+function pgLongest(){var a=[...actDays()].sort(),best=0,run=0,prev=null;a.forEach(function(k){if(prev&&daysBetween(prev,k)===1)run++;else run=1;if(run>best)best=run;prev=k});return best}
+function pgWeekMax(att){var m={},best=0;att.forEach(function(r){var w=Math.floor((r.date+3*864e5)/6048e5);m[w]=(m[w]||0)+1;if(m[w]>best)best=m[w]});return best}
+function pgData(){var att=anAtt(),holds=st.holds||[],c=pgCounter(),sa=att.reduce(function(s,r){return s+r.dur},0),sh=holds.reduce(function(s,h){return s+h.s},0);
+ var bestAtt=att.reduce(function(m,r){return Math.max(m,r.dur)},0),bestH=holds.reduce(function(m,h){return Math.max(m,h.s)},0);
+ return{att:att,holds:holds,bestHold:Math.max(bestAtt,bestH),total:Math.max(c.dur,sa)+sh,n:Math.max(c.n,att.length),bestScore:att.reduce(function(m,r){return Math.max(m,r.score)},0),streak:streak(),longest:pgLongest(),weekMax:pgWeekMax(att),stars:(typeof mtTotal==="function"?mtTotal():0)}}
+function pgNext(v,t){for(var i=0;i<t.length;i++)if(v<t[i])return t[i];return null}
+function pgMiles(d){return[
+ {ic:"⏱",c:"#3DE0C4",c2:"#1D8FE0",v:d.bestHold,f:fmtS,lab:"Beste Haltezeit",t:[5,10,20,30,60,90]},
+ {ic:"∑",c:"#B57BFF",c2:"#6E5BFF",v:d.total,f:fmtS,lab:"Gesamte Haltezeit",t:[60,300,600,1800,3600]},
+ {ic:"📹",c:"#FF9A3D",c2:"#FF4D5E",v:d.n,f:function(v){return String(Math.round(v))},lab:"Analysierte Versuche",t:[1,5,10,25,50,100]},
+ {ic:"🔥",c:"#FFB02E",c2:"#FF5A3D",v:d.streak,f:function(v){return v+(v===1?" Tag":" Tage")},lab:"Aktuelle Serie",t:[3,7,14,30,60]},
+ {ic:"🎯",c:"#3DE0C4",c2:"#12A38A",v:d.bestScore,f:function(v){return Math.round(v)+""},lab:"Bester Linien-Score",t:[50,70,80,90]}]}
+function pgMileHTML(m){var nx=pgNext(m.v,m.t),prev=0;m.t.forEach(function(x){if(x<=m.v)prev=x});var p=nx==null?100:Math.max(m.v>0?4:0,Math.min(100,(m.v-prev)/(nx-prev)*100));
+ return'<div class="mile"><span class="mi" style="--c:'+m.c+'">'+m.ic+'</span><b>'+m.f(m.v)+'</b><small>'+m.lab+'</small><div class="mbar"><i style="width:'+p.toFixed(0)+'%;background:linear-gradient(90deg,'+m.c+','+m.c2+')"></i></div><em>'+(nx==null?"Alle Ziele erreicht":"Nächstes Ziel: "+m.f(nx))+'</em></div>'}
+function pgWeek(d){var days=[],now=new Date();for(var i=6;i>=0;i--){var dt=new Date(now.getFullYear(),now.getMonth(),now.getDate()-i),k=dk(dt),s=0;d.holds.forEach(function(h){if(h.d===k)s+=h.s});d.att.forEach(function(r){if(dk(new Date(r.date))===k)s+=r.dur});days.push({l:["S","M","D","M","D","F","S"][dt.getDay()],s:s,now:i===0})}
+ var mx=Math.max.apply(0,days.map(function(x){return x.s}).concat([10])),tot=days.reduce(function(s,x){return s+x.s},0);
+ return'<div class="card pwk"><div class="pwh"><b>Diese Woche</b><span>'+fmtS(tot)+' gehalten</span></div><div class="pwb">'+days.map(function(x){return'<div class="pwc"><i class="'+(x.now?"now":x.s>0?"on":"")+'" style="height:'+Math.max(6,x.s/mx*100)+'%"></i><small>'+x.l+'</small></div>'}).join("")+'</div></div>'}
+function pgPB(d){var rows=[["#FF5A6E","↑","Längste Haltezeit",d.bestHold?fmtS(d.bestHold):"–"],["#3DE0C4","🎯","Bester Linien-Score",d.bestScore?Math.round(d.bestScore)+"":"–"],["#FFB02E","🔥","Längste Serie",d.longest?d.longest+(d.longest===1?" Tag":" Tage"):"–"],["#B57BFF","📅","Meiste Versuche (Woche)",d.weekMax||"–"]];
+ return'<h3 class="pgh">Persönliche Bestleistungen</h3><div class="card pb">'+rows.map(function(r){return'<div class="pbr"><span class="pbi" style="--c:'+r[0]+'">'+r[1]+'</span><span>'+r[2]+'</span><b>'+r[3]+'</b></div>'}).join("")+'</div>'}
+function pgOverview(d){return'<h3 class="pgh">Meilensteine</h3><div class="miles">'+pgMiles(d).map(pgMileHTML).join("")+'</div>'+pgWeek(d)+pgPB(d)+'<button class="mglink" data-cmgo="match"><span>🎮</span><div><b>Minigame: Handstand-Match</b><small>Posen nachmachen, Sterne sammeln · '+d.stars+' von '+(typeof MT!=="undefined"?MT.LEVELS.length*3:15)+' Sternen</small></div><i>›</i></button>'}
+/* Diagramme als SVG */
+function pgLine(vals,labels,opt){opt=opt||{};var W=320,H=140,pl=30,pr=10,pt=12,pb=22,n=vals.length,mn=opt.min!=null?opt.min:0,mx=opt.max!=null?opt.max:Math.max.apply(0,vals.concat([1]));if(mx<=mn)mx=mn+1;
+ var X=function(i){return pl+(n===1?(W-pl-pr)/2:i*(W-pl-pr)/(n-1))},Y=function(v){return pt+(H-pt-pb)*(1-(v-mn)/(mx-mn))},pts=vals.map(function(v,i){return[X(i),Y(v)]}),path=pts.map(function(p,i){return(i?"L":"M")+p[0].toFixed(1)+" "+p[1].toFixed(1)}).join(" "),area=path+" L"+X(n-1).toFixed(1)+" "+(H-pb)+" L"+X(0).toFixed(1)+" "+(H-pb)+" Z",id="g"+Math.random().toString(36).slice(2,7);
+ return'<svg viewBox="0 0 '+W+' '+H+'" class="pgsvg" role="img" aria-label="'+(opt.alt||"Verlauf")+'"><defs><linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3DE0C4" stop-opacity=".35"/><stop offset="1" stop-color="#3DE0C4" stop-opacity="0"/></linearGradient></defs>'+[0,.5,1].map(function(t){var y=pt+(H-pt-pb)*t;return'<line x1="'+pl+'" x2="'+(W-pr)+'" y1="'+y+'" y2="'+y+'" stroke="#2A2D34" stroke-width="1"/><text x="'+(pl-5)+'" y="'+(y+3)+'" text-anchor="end" fill="#8A909C" font-size="9">'+Math.round(mx-(mx-mn)*t)+'</text>'}).join("")+'<path d="'+area+'" fill="url(#'+id+')"/><path d="'+path+'" fill="none" stroke="#3DE0C4" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>'+pts.map(function(p,i){return'<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+(i===n-1?4.5:3)+'" fill="'+(i===n-1?"#fff":"#3DE0C4")+'"/>'}).join("")+'<text x="'+pl+'" y="'+(H-6)+'" fill="#8A909C" font-size="9">'+labels[0]+'</text><text x="'+(W-pr)+'" y="'+(H-6)+'" text-anchor="end" fill="#8A909C" font-size="9">'+labels[n-1]+'</text></svg>'}
+function pgBars(vals,labels){var W=320,H=120,pl=8,pb=18,n=vals.length,mx=Math.max.apply(0,vals.concat([1])),bw=(W-pl*2)/n;
+ return'<svg viewBox="0 0 '+W+' '+H+'" class="pgsvg" role="img" aria-label="Haltezeit je Versuch">'+vals.map(function(v,i){var h=(H-pb-8)*v/mx,x=pl+i*bw+bw*.15;return'<rect x="'+x.toFixed(1)+'" y="'+(H-pb-h).toFixed(1)+'" width="'+(bw*.7).toFixed(1)+'" height="'+Math.max(2,h).toFixed(1)+'" rx="4" fill="'+(i===n-1?"#3DE0C4":"#2B6F66")+'"/>'}).join("")+'<text x="'+pl+'" y="'+(H-4)+'" fill="#8A909C" font-size="9">'+labels[0]+'</text><text x="'+(W-pl)+'" y="'+(H-4)+'" text-anchor="end" fill="#8A909C" font-size="9">'+labels[n-1]+'</text></svg>'}
+function pgShare(list,id){var t=0,e=0;list.forEach(function(r){t+=r.dur*1000;e+=(r.err&&r.err[id])||0});return t?e/t*100:0}
+function pgTech(d){var a=d.att;if(a.length<2)return pgEmpty("Noch zu wenig Daten","Für die Entwicklung deiner Technik braucht die App mindestens zwei analysierte Handstände. Starte eine Analyse und halte den Handstand mindestens zwei Sekunden.");
+ var last=a.slice(-15),lab=last.map(function(r){return pgDate(r.date)}),h='<div class="card pgc"><div class="pgct"><b>Linien-Score</b><span>letzte '+last.length+' Versuche</span></div>'+pgLine(last.map(function(r){return r.score}),lab,{min:0,max:100,alt:"Linien-Score je Versuch"})+'</div><div class="card pgc"><div class="pgct"><b>Haltezeit</b><span>Sekunden je Versuch</span></div>'+pgBars(last.map(function(r){return r.dur}),lab)+'</div>';
+ var N=Math.min(5,Math.floor(a.length/2)),newer=a.slice(-N),older=a.slice(-2*N,-N),rows=[];
+ Object.keys(AN.ERR).forEach(function(id){var x=pgShare(older,id),y=pgShare(newer,id);if(x<1&&y<1)return;rows.push({id:id,x:x,y:y,d:y-x})});rows.sort(function(p,q){return q.y-p.y});
+ h+='<h3 class="pgh">Entwicklung je Fehler</h3><div class="card">'+(rows.length?rows.slice(0,6).map(function(r){var c=r.d<=-5?"good":r.d>=5?"bad":"same",t=r.d<=-5?"besser":r.d>=5?"schlechter":"gleich";return'<div class="trr"><div><b>'+AN.ERR[r.id].name+'</b><small>Anteil der Haltezeit: '+Math.round(r.x)+' % → '+Math.round(r.y)+' %</small></div><span class="chg '+c+'">'+t+'</span></div>'}).join("")+'<p class="cap">Verglichen werden deine letzten '+N+' mit den '+N+' Versuchen davor.</p>':'<p class="cap">In den letzten Versuchen wurden keine Abweichungen bestätigt.</p>')+'</div>';
+ var tot={};a.slice(-5).forEach(function(r){for(var k in(r.err||{}))tot[k]=(tot[k]||0)+r.err[k]});var top=Object.keys(tot).sort(function(p,q){return tot[q]-tot[p]})[0];
+ if(top&&AN.ERR[top])h+='<div class="card focus"><small>Dein größter Hebel</small><b>'+AN.ERR[top].name+'</b><p>'+AN.ERR[top].fix+'</p><p class="cap">Übung: '+AN.ERR[top].ex+'</p></div>';return h}
+function pgEmpty(t,s){return'<div class="card empty"><b>'+t+'</b><p>'+s+'</p><div class="row"><button class="pl" data-cmgo="pose">📹 Analyse starten</button></div></div>'}
+function pgOpts(a,sel){return a.map(function(r,i){return'<option value="'+i+'"'+(i===sel?" selected":"")+'>'+pgDT(r.date)+" · "+r.dur.toFixed(1).replace(".",",")+" s · Score "+r.score+'</option>'}).join("")}
+function pgCmp(d){var a=d.att;if(a.length<2)return pgEmpty("Noch kein Vergleich möglich","Für den Vorher-Nachher-Vergleich brauchst du mindestens zwei gespeicherte Versuche. Sie werden automatisch gespeichert, sobald die App einen Handstand erkennt.");
+ if(PG.a<0||PG.a>=a.length)PG.a=0;if(PG.b<0||PG.b>=a.length)PG.b=a.length-1;var A=a[PG.a],B=a[PG.b];
+ var rows=AN.compare(A,B),ids=Object.keys(AN.ERR).filter(function(k){return pgShare([A],k)>=1||pgShare([B],k)>=1}).slice(0,4);
+ var head='<div class="row cmpq"><button data-pgq="first">Erster ↔ Letzter</button><button data-pgq="prev">Vorletzter ↔ Letzter</button><button data-pgq="best">Bester ↔ Letzter</button></div><div class="cmpsel"><label>Vorher<select id="pga">'+pgOpts(a,PG.a)+'</select></label><label>Nachher<select id="pgb">'+pgOpts(a,PG.b)+'</select></label></div>';
+ var big='<div class="cmpbig"><div class="card"><small>Vorher · '+pgDT(A.date)+'</small><b>'+A.dur.toFixed(1).replace(".",",")+' s</b><span>Score '+A.score+'</span>'+(A.vid?'<button data-anvid="'+A.vid+'">▶ Video</button>':'')+'</div><div class="card now"><small>Nachher · '+pgDT(B.date)+'</small><b>'+B.dur.toFixed(1).replace(".",",")+' s</b><span>Score '+B.score+'</span>'+(B.vid?'<button data-anvid="'+B.vid+'">▶ Video</button>':'')+'</div></div>';
+ var tb='<div class="card"><table class="ant"><tr><th></th><th>Vorher</th><th>Nachher</th><th>Änderung</th></tr>'+rows.map(function(r){var g=r.d*r.better>.0001?"besser":(r.d*r.better<-.0001?"schlechter":"gleich");return'<tr><td>'+r.n+'</td><td>'+(+r.a||0).toFixed(1)+'</td><td>'+(+r.b||0).toFixed(1)+'</td><td class="'+g+'">'+(r.d>=0?"+":"")+(+r.d||0).toFixed(1)+' '+r.u+'</td></tr>'}).join("")+ids.map(function(k){var x=pgShare([A],k),y=pgShare([B],k),dd=y-x,g=dd<=-2?"besser":dd>=2?"schlechter":"gleich";return'<tr><td>'+AN.ERR[k].name+' (Anteil)</td><td>'+x.toFixed(0)+' %</td><td>'+y.toFixed(0)+' %</td><td class="'+g+'">'+(dd>=0?"+":"")+dd.toFixed(0)+' %</td></tr>'}).join("")+'</table><p class="cap">Nur gespeicherte Messwerte dieser beiden Versuche. Unterschiedliche Kamerawinkel oder Stile machen den Vergleich weniger aussagekräftig.</p></div>';
+ return head+big+tb}
+function pgAch(d){var a=d.att,first3=a.slice(0,3),last3=a.slice(-3),avg=function(x){return x.length?x.reduce(function(s,r){return s+r.score},0)/x.length:0},when=function(f){for(var i=0;i<a.length;i++)if(f(a[i]))return a[i].date;return null},L=[
+ {ic:"📹",t:"Erster Versuch",s:"Den ersten Handstand analysiert",ok:d.n>=1,w:a[0]&&a[0].date},
+ {ic:"⏱",t:"5 Sekunden",s:"5 s Handstand gehalten",ok:d.bestHold>=5,w:when(function(r){return r.dur>=5})},
+ {ic:"⏱",t:"10 Sekunden",s:"10 s Handstand gehalten",ok:d.bestHold>=10,w:when(function(r){return r.dur>=10})},
+ {ic:"⏱",t:"30 Sekunden",s:"30 s Handstand gehalten",ok:d.bestHold>=30,w:when(function(r){return r.dur>=30})},
+ {ic:"⏱",t:"1 Minute",s:"60 s Handstand gehalten",ok:d.bestHold>=60,w:null},
+ {ic:"🎯",t:"Saubere Linie",s:"Linien-Score ab 70",ok:d.bestScore>=70,w:when(function(r){return r.score>=70})},
+ {ic:"💎",t:"Präzision",s:"Linien-Score ab 90",ok:d.bestScore>=90,w:when(function(r){return r.score>=90})},
+ {ic:"✅",t:"Sauberer Handstand",s:"Score ab 80 bei mindestens 5 s",ok:a.some(function(r){return r.score>=80&&r.dur>=5}),w:when(function(r){return r.score>=80&&r.dur>=5})},
+ {ic:"🔁",t:"Dranbleiben",s:"10 Versuche analysiert",ok:d.n>=10,w:null},
+ {ic:"🏅",t:"Profi-Routine",s:"50 Versuche analysiert",ok:d.n>=50,w:null},
+ {ic:"🔥",t:"Eine Woche",s:"7 Tage in Folge trainiert",ok:d.longest>=7,w:null},
+ {ic:"🌟",t:"Ein Monat",s:"30 Tage in Folge trainiert",ok:d.longest>=30,w:null},
+ {ic:"📈",t:"Technik-Sprung",s:"Score im Schnitt um 15 Punkte besser",ok:a.length>=6&&avg(last3)-avg(first3)>=15,w:null},
+ {ic:"🎮",t:"Minigame",s:"Im Handstand-Match einen Stern geholt",ok:d.stars>=1,w:null}],n=L.filter(function(x){return x.ok}).length;
+ return'<div class="card achh"><b>'+n+' von '+L.length+'</b><span>Erfolge freigeschaltet</span><div class="mbar"><i style="width:'+(n/L.length*100).toFixed(0)+'%;background:linear-gradient(90deg,#3DE0C4,#1D8FE0)"></i></div></div><div class="achg">'+L.map(function(x){return'<div class="ach'+(x.ok?" on":"")+'"><span>'+x.ic+'</span><b>'+x.t+'</b><small>'+x.s+(x.ok&&x.w?" · "+pgDate(x.w):"")+'</small></div>'}).join("")+'</div>'}
+function renderProg(){var e=$("pgbody");if(!e)return;var d=pgData();$$("#pgtabs [data-pgt]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.pgt===PG.tab)});
+ e.innerHTML=PG.tab==="te"?pgTech(d):PG.tab==="cp"?pgCmp(d):PG.tab==="ac"?pgAch(d):pgOverview(d)}
+function renderHomeStats(){var e=$("hs3");if(!e)return;var d=pgData();e.innerHTML='<button data-pg="prog"><span class="hsi" style="--c:#FFB02E">🔥</span><b>'+d.streak+'</b><small>Tage Serie</small></button><button data-pg="prog"><span class="hsi" style="--c:#3DE0C4">⏱</span><b>'+(d.bestHold?fmtS(d.bestHold):"–")+'</b><small>Beste Haltezeit</small></button><button data-pg="prog"><span class="hsi" style="--c:#B57BFF">📹</span><b>'+d.n+'</b><small>Versuche</small></button>'}
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;var d=b.dataset;if(d.pgt){PG.tab=d.pgt;renderProg();return}
+ if(d.pgq){var a=anAtt();if(a.length<2)return;PG.b=a.length-1;if(d.pgq==="first")PG.a=0;else if(d.pgq==="prev")PG.a=a.length-2;else{var bi=0;a.forEach(function(r,i){if(r.score>a[bi].score||(r.score===a[bi].score&&r.dur>a[bi].dur))bi=i});PG.a=bi===a.length-1?0:bi}renderProg()}});
+document.addEventListener("change",function(e){if(e.target.id==="pga"){PG.a=+e.target.value;renderProg()}else if(e.target.id==="pgb"){PG.b=+e.target.value;renderProg()}});
+
+renderHomeStats();
 anUI();mtRenderLv();
 function renderAdapt(){var e=$("adapt");if(!e)return;var adv=false;try{adv=advVisible()}catch(x){}
- if(!adv){e.innerHTML='<h3>🌱 Neu hier? So startest du</h3><p class="cap">Zuerst Handgelenke aufwärmen und den Wandhandstand lernen. Die Kamera hilft dir dabei, deine Haltung zu sehen. Mit dem Match-Spiel übst du Posen auch ohne Handstand.</p><div class="row"><button class="pl" data-t="beg">Anfänger-Pfad öffnen</button><button data-cmgo="match">🎮 Match ausprobieren</button></div>'}
+ if(!adv){e.innerHTML='<h3>🌱 Neu hier? So startest du</h3><p class="cap">Zuerst Handgelenke aufwärmen und den Wandhandstand lernen. Die Kamera hilft dir dabei, deine Haltung zu sehen. Im Fortschritt siehst du später, wie sich deine Technik entwickelt.</p><div class="row"><button class="pl" data-t="beg">Anfänger-Pfad öffnen</button><button data-cmgo="match">🎮 Match ausprobieren</button></div>'}
  else{var a=anAtt(),l=a[a.length-1],txt=l?"Letzter Versuch: "+l.dur.toFixed(1)+" s, Linien-Score "+l.score+(l.top&&l.top.length&&AN.ERR[l.top[0]]?" · häufigster Punkt: "+AN.ERR[l.top[0]].name:""):"Noch keine Aufnahme gespeichert.";
   e.innerHTML='<h3>🎯 Dein Fokus heute</h3><p class="cap">Plan abarbeiten, danach eine gezielte Aufnahme mit Analyse. '+txt+'</p><div class="row"><button class="pl" data-cmgo="pose">📹 Aufnahme starten</button><button data-cmgo="hist">📈 Verlauf ansehen</button></div>'}}
 var _sp0=showPage;showPage=function(p){_sp0(p);if(p==="today")try{renderAdapt()}catch(x){}};
