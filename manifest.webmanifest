@@ -1,13 +1,13 @@
 {
- "name": "Handstand-Coach",
- "short_name": "Handstand",
+ "name": "Handstand Coach",
+ "short_name": "Handstand Coach",
  "description": "Handstand lernen mit Kamera-Analyse, Sprachhinweisen und Match-Spiel",
  "start_url": "./index.html",
  "scope": "./",
  "display": "standalone",
  "orientation": "portrait",
  "background_color": "#F3F5F9",
- "theme_color": "#0B6E7A",
+ "theme_color": "#0A2A5E",
  "lang": "de",
  "icons": [
   {
