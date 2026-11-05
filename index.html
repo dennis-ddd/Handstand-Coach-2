@@ -291,13 +291,14 @@ html,body{background:#0B0C0F;color:#F3F4F6}
 .achg{display:grid;grid-template-columns:1fr 1fr;gap:10px}.ach{background:#16181D;border:1px solid #20232A;border-radius:18px;padding:12px;opacity:.5;display:flex;flex-direction:column;gap:2px}.ach.on{opacity:1;border-color:#2B6F66}.ach span{font-size:24px;filter:grayscale(1)}.ach.on span{filter:none}.ach small{color:#8E94A0;font-size:12px}
 .empty p{color:#8E94A0}
 .backmt{background:transparent;border:0;color:#3DE0C4;padding:4px 0;font-weight:600}
+.remb{display:flex;align-items:center;gap:12px;margin-bottom:12px;border-color:#5A3F1C;background:linear-gradient(135deg,#2A2118,#16181D)}.remb span{font-size:24px}.remb div{flex:1}.remb small{display:block;color:#8E94A0}.fl input[type=time]{background:#16181D;color:#F3F4F6;border:1px solid #2A2D34;border-radius:12px;padding:8px}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
 <main>
 <div class="page" id="p-today">
 <section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-cmgo="file">🎞 Video prüfen</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"></div></section>
-<div class="hs3" id="hs3"></div>
+<div class="hs3" id="hs3"></div><div id="hrem"></div>
 <section class="card adapt" id="adapt"></section>
 <div class="qa" role="group" aria-label="Training"><button data-pg="cal"><span class="ti">📅</span>Kalender</button><button data-pg="prog"><span class="ti">📈</span>Fortschritt</button><button data-t="beg"><span class="ti">🌱</span>Lernen</button><button data-pg="lib"><span class="ti">📚</span>Übungen</button></div>
 <section class="card nxt" id="nxt"></section>
@@ -406,6 +407,7 @@ html,body{background:#0B0C0F;color:#F3F4F6}
 <section class="card" id="profcard"></section>
 <section class="card" id="lvsel"></section>
 <section class="card" id="lvc"></section>
+<h2>Erinnerung</h2><section class="card" id="rem"></section>
 <h2>Tagesform-Check</h2><section class="card" id="mood"></section>
 <h2>Warm-up für heute</h2><section class="card" id="warm"></section>
 <h2>Trainingsnotizen</h2><section class="card" id="notes"></section>
@@ -785,7 +787,7 @@ function moodAdj(){const m=st.mood[tdk()];if(!m||!m.e||!m.w||!m.s)return 0;const
 // ---- Seiten
 const PAGES=["today","cal","learn","lib","cam","prog","me"];
 function showPage(p){if(p!=="cam"){if(typeof pmStop==="function")pmStop(true);if(typeof camStopClaude==="function")camStopClaude()}PAGES.forEach(x=>{$("p-"+x).hidden=x!==p});$$(".bnav [data-pg]").forEach(b=>b.setAttribute("aria-current",b.dataset.pg===(p==="cal"?"today":p)?"page":"false"));
- if(p==="today"){renderTrain();drawPlan()}if(p==="cal"){renderWeek();drawCal();renderLP()}if(p==="lib")renderLib();if(p==="cam")renderCam();if(p==="prog")renderProg();if(p==="today")renderHomeStats();if(p==="me"){renderMe();loadBoard()}if(typeof scrollTo==="function")scrollTo(0,0)}
+ if(p==="today"){renderTrain();drawPlan()}if(p==="cal"){renderWeek();drawCal();renderLP()}if(p==="lib")renderLib();if(p==="cam")renderCam();if(p==="prog")renderProg();if(p==="today"){renderHomeStats();renderHomeRem()}if(p==="me"){renderMe();loadBoard()}if(typeof scrollTo==="function")scrollTo(0,0)}
 function showTab(t){if(t==="train"||t==="today"){showPage("today");return}showPage("learn");$("beg").hidden=t!=="beg";$("adv").hidden=t!=="adv";$$("#lt [data-t]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.t===t))}
 const GOM={plan:["today","plan"],today:["today","plan"],goals:["today","goals"],timer:["today","timer"],cam:["cam","p-cam"],steps:["learn","steps","beg"],tips:["learn","tips","beg"],beg:["learn","steps","beg"],adv:["learn","adv","adv"],lib:["lib","p-lib"],me:["me","p-me"],mood:["me","mood"],warm:["me","warm"],notes:["me","notes"],stats:["me","stats"],mgoals:["me","mgoals"],wk:["cal","wkd"],cal:["cal","p-cal"]};
 function goTo(id){closeSheet(true);const g=GOM[id]||["today",id];if(g[2])showTab(g[2]);else showPage(g[0]);if(id==="wk"&&$("wkd"))$("wkd").open=true;const el=$(g[1]);if(!el)return;el.scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});el.classList?.remove?.("flash");void el.offsetWidth;el.classList?.add?.("flash")}
@@ -839,7 +841,7 @@ function addFlex(){const v=parseFloat($("fv").value);if(!(v>=0)){toast("Bitte ei
 function pauseHTML(){const p=pauses(),mx=Math.max(0,...p.map(x=>x.days));return`<p class="cap">Pausen ab 3 Tagen ohne Training. Das ist normal. Wichtig ist, locker wieder einzusteigen.</p>${p.length?`<ul class="nl">${p.slice(0,6).map(x=>`<li><b>${x.days} Tage Pause</b> ${dtx(x.from)} bis ${x.open?"heute":dtx(x.to)}${x.open?" · läuft noch":""}</li>`).join("")}</ul><p class="cap">Längste Pause: ${mx} Tage. Nach einer Pause von über einer Woche: zuerst Wandübungen und Handgelenke aufwärmen.</p>`:`<p>Keine längeren Pausen. Stark!</p>`}`}
 function levelHTML(){const L=lvlOf(st.xp),a=LV[L-1],b=LV[L]??null;return`<div class="ph"><h3 style="margin:0">Level ${L}</h3><b>${LVN[L-1]}</b></div><div class="bar"><i style="width:${b===null?100:Math.round((st.xp-a)/(b-a)*100)}%"></i></div><p class="cap">${st.xp} XP${b===null?" · höchstes Level erreicht":` · noch ${b-st.xp} XP bis Level ${L+1}`} · ${st.done} Tage geschafft</p>`}
 function achHTML(){return ACH.map(([s,n])=>{const on=st.best>=s;return `<div class="bg${on?" on":""}"><span>${on?"🏅":"🔒"}</span><b>${s>=60?Math.floor(s/60)+" min"+(s%60?" "+s%60+" s":""):s+" s"}</b><small>${esc(n)}</small></div>`}).join("")}
-function renderMe(){$("profcard").innerHTML=profHTML();$("lvsel").innerHTML=lvselHTML();$("lvc").innerHTML=levelHTML();$("ac").innerHTML=achHTML();$("mood").innerHTML=moodHTML();$("warm").innerHTML=warmHTML();$("notes").innerHTML=noteHTML();$("mgoals").innerHTML=goalRows(true)+`<h3>Eigenes Ziel</h3><div class="row"><input id="gt" placeholder="z. B. Hollow-Hold 60 s" aria-label="Ziel"><input id="gn" type="number" min="1" placeholder="Zahl" style="width:80px" aria-label="Zielwert"><input id="gu" placeholder="Einheit" style="width:90px" aria-label="Einheit"></div><div class="row"><button class="pl" data-gadd="1">Ziel hinzufügen</button></div>`;$("stats").innerHTML=statsHTML();$("pause").innerHTML=pauseHTML()}
+function renderMe(){if(typeof renderRem==="function")renderRem();$("profcard").innerHTML=profHTML();$("lvsel").innerHTML=lvselHTML();$("lvc").innerHTML=levelHTML();$("ac").innerHTML=achHTML();$("mood").innerHTML=moodHTML();$("warm").innerHTML=warmHTML();$("notes").innerHTML=noteHTML();$("mgoals").innerHTML=goalRows(true)+`<h3>Eigenes Ziel</h3><div class="row"><input id="gt" placeholder="z. B. Hollow-Hold 60 s" aria-label="Ziel"><input id="gn" type="number" min="1" placeholder="Zahl" style="width:80px" aria-label="Zielwert"><input id="gu" placeholder="Einheit" style="width:90px" aria-label="Einheit"></div><div class="row"><button class="pl" data-gadd="1">Ziel hinzufügen</button></div>`;$("stats").innerHTML=statsHTML();$("pause").innerHTML=pauseHTML()}
 
 // ======== Heute: Plan, Woche, Kalender, Tag, Lernpfad ========
 const estMin=items=>sum(items.map(x=>(LIBM[x.id]||{dur:3}).dur));
@@ -1519,7 +1521,22 @@ document.addEventListener("click",function(e){var b=e.target.closest("button");i
  if(d.pgq){var a=anAtt();if(a.length<2)return;PG.b=a.length-1;if(d.pgq==="first")PG.a=0;else if(d.pgq==="prev")PG.a=a.length-2;else{var bi=0;a.forEach(function(r,i){if(r.score>a[bi].score||(r.score===a[bi].score&&r.dur>a[bi].dur))bi=i});PG.a=bi===a.length-1?0:bi}renderProg()}});
 document.addEventListener("change",function(e){if(e.target.id==="pga"){PG.a=+e.target.value;renderProg()}else if(e.target.id==="pgb"){PG.b=+e.target.value;renderProg()}});
 
-renderHomeStats();
+/* ===== Erinnerungen (Kalender-Datei) + Hinweis auf der Startseite ===== */
+var RMK="hs-rem-v1";
+function remCfg(){try{var o=JSON.parse(localStorage.getItem(RMK)||"{}");return{n:[1,2,4,7].indexOf(+o.n)<0?4:+o.n,t:/^\d\d:\d\d$/.test(o.t||"")?o.t:"18:00"}}catch(e){return{n:4,t:"18:00"}}}
+function remSave(c){try{localStorage.setItem(RMK,JSON.stringify(c))}catch(e){}}
+function remHTML(){var c=remCfg();return'<p class="cap">Trägt eine wiederkehrende Erinnerung in deinen Handy-Kalender ein. Sie läuft über den Kalender, nicht über die App, und weiß nicht, ob du schon geübt hast.</p><div class="row"><label class="fl">Wie oft <select id="remn">'+[[1,"täglich"],[2,"alle 2 Tage"],[4,"alle 4 Tage (Standard)"],[7,"wöchentlich"]].map(function(x){return'<option value="'+x[0]+'"'+(x[0]===c.n?" selected":"")+'>'+x[1]+'</option>'}).join("")+'</select></label><label class="fl">Uhrzeit <input type="time" id="remt" value="'+c.t+'"></label></div><div class="row"><button class="pl" data-rem="ics">📅 Zum Kalender hinzufügen</button></div><p class="cap" id="remm"></p>'}
+function remIcs(){var c=remCfg(),d=new Date(),p=function(n){return(n<10?"0":"")+n},hm=c.t.split(":"),st=new Date(d.getFullYear(),d.getMonth(),d.getDate()+(c.n===1?0:1),+hm[0],+hm[1]);
+ if(c.n===1&&st<=d)st.setDate(st.getDate()+1);var f=function(x){return x.getFullYear()+p(x.getMonth()+1)+p(x.getDate())+"T"+p(x.getHours())+p(x.getMinutes())+"00"},en=new Date(st.getTime()+15*6e4);
+ return["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Handstand Coach//DE","BEGIN:VEVENT","UID:hs-"+Date.now()+"@handstand-coach","DTSTAMP:"+f(d),"DTSTART:"+f(st),"DTEND:"+f(en),"RRULE:FREQ=DAILY;INTERVAL="+c.n,"SUMMARY:🤸 Handstand üben","DESCRIPTION:Heute noch ein paar Handstände üben? Schon 5 Minuten zählen.","BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:Handstand üben","TRIGGER:PT0S","END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n")}
+function remExport(){var m=$("remm");try{var b=new Blob([remIcs()],{type:"text/calendar"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="handstand-erinnerung.ics";document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(u)},4000);if(m)m.textContent="Datei erstellt. Öffne sie jetzt (Downloads oder Benachrichtigung) und bestätige das Hinzufügen im Kalender."}catch(e){if(m)m.textContent="Die Datei konnte hier nicht erstellt werden. Öffne die App direkt im Browser oder installiert."}}
+function renderRem(){var e=$("rem");if(e)e.innerHTML=remHTML()}
+function renderHomeRem(){var e=$("hrem");if(!e)return;var a=[...actDays()].sort(),last=a.length?a[a.length-1]:null,c=remCfg(),n=last?daysBetween(last,tdk()):null;
+ if(n==null)e.innerHTML="";else if(n>=c.n)e.innerHTML='<div class="card remb"><span>⏰</span><div><b>'+(n===1?"Seit gestern":n>30?"Schon länger":"Seit "+n+" Tagen")+' kein Training</b><small>Heute noch ein paar Handstände?</small></div><button class="pl" data-cmgo="pose">Los</button></div>';else e.innerHTML=""}
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(b&&b.dataset.rem==="ics"){var n=$("remn"),t=$("remt");remSave({n:n?+n.value:4,t:t&&t.value?t.value:"18:00"});remExport()}});
+document.addEventListener("change",function(e){if(e.target.id==="remn"||e.target.id==="remt"){var n=$("remn"),t=$("remt");remSave({n:+n.value,t:t.value||"18:00"});renderHomeRem()}});
+
+renderHomeStats();renderHomeRem();
 anUI();mtRenderLv();
 function renderAdapt(){var e=$("adapt");if(!e)return;var adv=false;try{adv=advVisible()}catch(x){}
  if(!adv){e.innerHTML='<h3>🌱 Neu hier? So startest du</h3><p class="cap">Zuerst Handgelenke aufwärmen und den Wandhandstand lernen. Die Kamera hilft dir dabei, deine Haltung zu sehen. Im Fortschritt siehst du später, wie sich deine Technik entwickelt.</p><div class="row"><button class="pl" data-t="beg">Anfänger-Pfad öffnen</button><button data-cmgo="match">🎮 Match ausprobieren</button></div>'}
