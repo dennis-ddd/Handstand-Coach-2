@@ -301,6 +301,16 @@ html,body{max-width:100%;overflow-x:hidden}
 .row{flex-wrap:wrap}.row>*{min-width:0}
 select,input{max-width:100%}
 .fl{min-width:0}
+.swd{margin-top:6px}.swdots{display:flex;gap:6px;justify-content:center;margin:2px 0 10px}.swdots i{width:22px;height:6px;border-radius:99px;background:#2A2D34}.swdots i.on{background:#3DE0C4}
+.swstack{position:relative;height:350px;margin:0 auto;max-width:360px;touch-action:pan-y}
+.swc{position:absolute;inset:0 0 14px 0;background:#1B1E24;border:1px solid #2A2D34;border-radius:26px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;touch-action:none;user-select:none;-webkit-user-select:none;box-shadow:0 10px 30px rgba(0,0,0,.45);cursor:grab;overflow:hidden}
+.swc[data-i="0"]{transition:transform .2s}.swc h3{margin:0;font-size:20px}.swc p{margin:0;color:#8E94A0;font-size:14px;line-height:1.4}.swc ul{margin:4px 0 0;padding-left:18px;color:#C7CBD3;font-size:13px}
+.swi{font-size:64px;text-align:center;line-height:1.1;margin:4px 0}.swt{align-self:flex-start;background:#12332D;color:#3DE0C4;border-radius:99px;padding:4px 10px;font-size:12px;font-weight:700}
+.swq{position:absolute;right:12px;top:12px;width:30px;height:30px;border-radius:50%;border:1px solid #2A2D34;background:#16181D;color:#F3F4F6}
+.swl{position:absolute;top:18px;padding:4px 12px;border:3px solid;border-radius:10px;font-weight:800;opacity:0;pointer-events:none;letter-spacing:.06em}.swl-y{left:16px;color:#3DE0C4;border-color:#3DE0C4;transform:rotate(-12deg)}.swl-n{right:16px;color:#FF5A6E;border-color:#FF5A6E;transform:rotate(12deg)}.swl-f{left:50%;top:70px;color:#FFB02E;border-color:#FFB02E;transform:translateX(-50%)}
+.swb{display:flex;justify-content:center;gap:14px;margin-top:6px}.swb button{width:56px;height:56px;border-radius:50%;border:1px solid #2A2D34;background:#16181D;font-size:22px;color:#F3F4F6}.swno{color:#FF5A6E!important}.swfav{color:#FFB02E!important}.swyes{color:#3DE0C4!important}.swback{width:44px!important;height:44px!important;align-self:center;font-size:18px!important}.swb button:disabled{opacity:.35}
+.swch{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.swp{background:#12332D;border-radius:99px;padding:5px 6px 5px 10px;font-size:13px;display:inline-flex;gap:6px;align-items:center}.swp button{width:20px;height:20px;border-radius:50%;border:0;background:#1E4A41;color:#fff;padding:0;line-height:1}
+.swc h3{text-transform:none;letter-spacing:0;color:#F3F4F6;font-size:20px;line-height:1.2}.swc ul{list-style:disc}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
@@ -1626,6 +1636,47 @@ document.addEventListener("click",function(e){var b=e.target.closest("button");i
 var _sp1=showPage;showPage=function(p){_sp1(p);if(p==="today")renderIntake()};
 var _al1=applyLevel;applyLevel=function(){_al1();renderIntake()};
 renderIntake();
+
+
+/* ===== Heute dran: Übungen per Swipe wählen ===== */
+function swDay(){var d=getDay(new Date());if(!d.sw)d.sw={picks:[],seen:[],hist:[]};return d}
+function swDeck(d){var k=dk(new Date()),l=inten(),G=st.plan.goal,rnd=mulberry(seedOf(k+"sw"+G)),a=EXL.filter(function(e){return e.cat==="d"?e.tier<=Math.min(4,1+Math.ceil(l/2)):(e.tier<=l&&e.tier>=Math.max(1,l-4))}).filter(function(e){return!(typeof itNoWall==="function"&&itNoWall(e))});
+ var sug=d.items.map(function(i){return i.id}),w=a.map(function(e){var base=-Math.log(rnd()||1e-9)/((e.tags.indexOf(G)>=0?2:1)*(typeof intBoost==="function"?intBoost(e):1)*(sug.indexOf(e.id)>=0?2:1));return{e:e,k:base}});w.sort(function(x,y){return x.k-y.k});return w.map(function(x){return x.e})}
+function swNeed(d){return d.items.length}
+function swCardHTML(e,l,i,total){var how=(e.how||[]).slice(0,2).map(function(h){return"<li>"+esc(h)+"</li>"}).join("");
+ return'<div class="swc" data-i="'+i+'" style="z-index:'+(10-i)+';transform:translateY('+(i*10)+'px) scale('+(1-i*.04)+');opacity:'+(i>2?0:1)+'"><div class="swl swl-y">DABEI</div><div class="swl swl-n">NEIN</div><div class="swl swl-f">★ FAVORIT</div><span class="swt">'+typeOf(e)+' · '+dose(e,l)+'</span><div class="swi">'+e.ic+'</div><h3>'+esc(e.n)+'</h3><p>'+esc(e.why||"")+'</p><ul>'+how+'</ul><button class="swq" data-ex="'+e.id+'" aria-label="Anleitung zu '+esc(e.n)+'">?</button></div>'}
+function swRender(){var now=new Date(),d=swDay(),n=swNeed(d),sw=d.sw,l=inten();$("pc").textContent=sw.picks.length+" von "+n+" gewählt";$("pb").style.width=sw.picks.length/n*100+"%";
+ var deck=swDeck(d).filter(function(e){return sw.seen.indexOf(e.id)<0}),full=sw.picks.length>=n,body="";
+ var dots='<div class="swdots">'+Array.from({length:n}).map(function(_,i){return'<i class="'+(i<sw.picks.length?"on":"")+'"></i>'}).join("")+'</div>';
+ var chosen=sw.picks.length?'<div class="swch">'+sw.picks.map(function(id){var e=EXM[id];return'<span class="swp">'+e.ic+" "+esc(e.n)+'<button data-sw="rm" data-id="'+id+'" aria-label="Entfernen">×</button></span>'}).join("")+'</div>':"";
+ if(full){body='<div class="swd"><h3 style="margin:0 0 4px">Dein Training steht 🎉</h3><p class="cap">'+n+' Übungen, ca. '+estMin(sw.picks.map(function(id){return{id:id,dose:dose(EXM[id],l)}}))+' Minuten.</p>'+dots+chosen+'<div class="row" style="margin-top:12px"><button class="pl" data-sw="start">▶ Training beginnen</button><button class="ghost" data-sw="undo">Zurück</button></div></div>'}
+ else if(!deck.length){body='<div class="swd"><h3 style="margin:0 0 4px">Keine Karten mehr</h3><p class="cap">Du hast alle Übungen gesehen, aber erst '+sw.picks.length+' von '+n+' gewählt.</p>'+dots+chosen+'<div class="row" style="margin-top:12px"><button class="pl" data-sw="fill">Rest automatisch auffüllen</button><button class="ghost" data-sw="again">Übersprungene nochmal zeigen</button></div></div>'}
+ else{var top=deck.slice(0,3);body='<div class="swd">'+dots+'<div class="swstack" id="swst">'+top.map(function(e,i){return swCardHTML(e,l,i,deck.length)}).reverse().join("")+'</div><div class="swb"><button class="swno" data-sw="no" aria-label="Überspringen">✕</button><button class="swback" data-sw="undo" aria-label="Zurück"'+(sw.hist.length?"":" disabled")+'>↶</button><button class="swfav" data-sw="fav" aria-label="Favorit">★</button><button class="swyes" data-sw="yes" aria-label="Dabei">✓</button></div><p class="cap" style="text-align:center">← nein · → dabei · ↑ Favorit und dabei</p>'+chosen+'<div class="row" style="margin-top:8px"><button class="lnk" data-sw="auto">Vorschlag der App übernehmen</button></div></div>'}
+ $("plbody").innerHTML=body;if(!full&&deck.length)swBind()}
+function swCommit(kind){var d=swDay(),sw=d.sw,deck=swDeck(d).filter(function(e){return sw.seen.indexOf(e.id)<0});if(!deck.length)return;var e=deck[0];
+ if(kind!=="no"&&sw.picks.length>=swNeed(d))return;sw.seen.push(e.id);sw.hist.push({id:e.id,k:kind});
+ if(kind==="yes"||kind==="fav")sw.picks.push(e.id);if(kind==="fav"){st.fav[e.id]=true;toast("Zu Favoriten hinzugefügt")}save();swRender()}
+function swFly(kind){var c=document.querySelector("#swst .swc[data-i='0']");if(!c){swCommit(kind);return}var t=kind==="yes"?"translate(480px,40px) rotate(24deg)":kind==="no"?"translate(-480px,40px) rotate(-24deg)":"translate(0,-520px)";c.style.transition="transform .24s ease-in,opacity .24s";c.style.transform=t;c.style.opacity="0";setTimeout(function(){swCommit(kind)},230)}
+function swBind(){var c=document.querySelector("#swst .swc[data-i='0']");if(!c)return;var sx=0,sy=0,dx=0,dy=0,on=false,mv=false;
+ var setLb=function(){var ay=-dy,ax=Math.abs(dx),fav=ay>40&&ay>ax,y=!fav&&dx>20,n=!fav&&dx<-20;c.querySelector(".swl-y").style.opacity=y?Math.min(1,dx/90):0;c.querySelector(".swl-n").style.opacity=n?Math.min(1,-dx/90):0;c.querySelector(".swl-f").style.opacity=fav?Math.min(1,ay/90):0};
+ c.addEventListener("pointerdown",function(e){if(e.target.closest("button"))return;on=true;mv=false;sx=e.clientX;sy=e.clientY;dx=dy=0;c.style.transition="none"});
+ c.addEventListener("pointermove",function(e){if(!on)return;dx=e.clientX-sx;dy=e.clientY-sy;if(!mv&&Math.hypot(dx,dy)>6){mv=true;try{c.setPointerCapture(e.pointerId)}catch(x){}}if(!mv)return;c.style.transform="translate("+dx+"px,"+dy+"px) rotate("+dx/18+"deg)";setLb()});
+ var end=function(){if(!on)return;on=false;if(!mv)return;var up=-dy>100&&-dy>Math.abs(dx);if(up)swFly("fav");else if(dx>90)swFly("yes");else if(dx<-90)swFly("no");else{c.style.transition="transform .2s";c.style.transform="";dx=dy=0;setLb()}};
+ c.addEventListener("pointerup",end);c.addEventListener("pointercancel",end)}
+function swStart(){var d=swDay(),l=inten(),sw=d.sw,ids=sw.picks.slice().sort(function(a,b){return(EXM[a].cat==="d"?0:1)-(EXM[b].cat==="d"?0:1)});d.items=ids.map(function(id){return{id:id,dose:dose(EXM[id],l)}});d.done=[];d.picked=true;save();drawPlan();try{renderTrain()}catch(x){}toast("Los geht's. Viel Spaß!");var e=$("plan");if(e)e.scrollIntoView({behavior:"smooth",block:"start"})}
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!b.dataset.sw)return;var k=b.dataset.sw,d=swDay(),sw=d.sw;
+ if(k==="yes"||k==="no"||k==="fav"){swFly(k);return}
+ if(k==="undo"){var h=sw.hist.pop();if(h){sw.seen=sw.seen.filter(function(x){return x!==h.id});sw.picks=sw.picks.filter(function(x){return x!==h.id})}save();swRender();return}
+ if(k==="rm"){sw.picks=sw.picks.filter(function(x){return x!==b.dataset.id});sw.hist=sw.hist.filter(function(x){return x.id!==b.dataset.id||x.k==="no"});save();swRender();return}
+ if(k==="again"){sw.seen=sw.picks.slice();sw.hist=[];save();swRender();return}
+ if(k==="fill"){var need=swNeed(d)-sw.picks.length,all=swDeck(d).filter(function(x){return sw.picks.indexOf(x.id)<0});all.slice(0,need).forEach(function(x){sw.picks.push(x.id)});save();swRender();return}
+ if(k==="auto"){d.picked=true;save();drawPlan();return}
+ if(k==="start"){swStart();return}
+ if(k==="redo"){d.picked=false;d.sw={picks:[],seen:[],hist:[]};save();drawPlan();return}});
+document.addEventListener("keydown",function(e){if(!document.querySelector("#swst")||e.target.closest&&e.target.closest("input,select,textarea"))return;if($("p-today").hidden)return;if(e.key==="ArrowRight"){swFly("yes")}else if(e.key==="ArrowLeft"){swFly("no")}else if(e.key==="ArrowUp"){e.preventDefault();swFly("fav")}});
+var _dpSw=drawPlan;drawPlan=function(){var now=new Date();if(isTrain(now)){var d=getDay(now);if(!d.picked&&!d.fin&&!(d.done&&d.done.length)){var k=dk(now);$("psub").innerHTML="Wische durch die Übungen und stelle dein Training zusammen.";swRender();return}}
+ _dpSw();var now2=new Date();if(isTrain(now2)){var d2=getDay(now2);if(d2.picked&&!d2.fin&&!(d2.done&&d2.done.length)){$("plbody").insertAdjacentHTML("beforeend",'<div class="row" style="margin-top:8px"><button class="lnk" data-sw="redo">Übungen neu wählen</button></div>')}}};
+try{drawPlan()}catch(x){}
 
 renderHomeStats();renderHomeRem();
 anUI();mtRenderLv();
