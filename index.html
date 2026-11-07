@@ -294,6 +294,13 @@ html,body{background:#0B0C0F;color:#F3F4F6}
 .remb{display:flex;align-items:center;gap:12px;margin-bottom:12px;border-color:#5A3F1C;background:linear-gradient(135deg,#2A2118,#16181D)}.remb span{font-size:24px}.remb div{flex:1}.remb small{display:block;color:#8E94A0}.fl input[type=time]{background:#16181D;color:#F3F4F6;border:1px solid #2A2D34;border-radius:12px;padding:8px}
 .chkr{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #20232A;padding:10px 0;color:#F3F4F6}.chkr .bx{width:22px;height:22px;border-radius:6px;border:2px solid #3A3F4A;display:grid;place-items:center;flex:none;color:#04201B;font-weight:700}.chkr[aria-pressed=true] .bx{background:#3DE0C4;border-color:#3DE0C4}
 .itk{margin-bottom:12px;border-color:#2B6F66;background:linear-gradient(160deg,#12332D,#16181D 60%)}.opt{display:block;width:100%;text-align:left;background:#16181D;border:1px solid #2A2D34;border-radius:16px;padding:12px;margin-top:8px;color:#F3F4F6}.opt small{display:block;color:#8E94A0;margin-top:2px}.opt[aria-pressed=true]{border-color:#3DE0C4;background:#12332D;color:#F3F4F6}.opt[aria-pressed=true] small{color:#9fd8cf}.itk button:disabled{opacity:.4}
+html,body{max-width:100%;overflow-x:hidden}
+.qa{grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:8px}
+.qa button{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-width:0;padding:12px 4px!important;font-size:13px;text-align:center;overflow:hidden}
+.qa button .ti{margin:0!important}
+.row{flex-wrap:wrap}.row>*{min-width:0}
+select,input{max-width:100%}
+.fl{min-width:0}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
@@ -1623,9 +1630,9 @@ renderIntake();
 renderHomeStats();renderHomeRem();
 anUI();mtRenderLv();
 function renderAdapt(){var e=$("adapt");if(!e)return;var adv=false;try{adv=advVisible()}catch(x){}
- if(!adv){e.innerHTML='<h3>🌱 Neu hier? So startest du</h3><p class="cap">Zuerst Handgelenke aufwärmen und den Wandhandstand lernen. Die Kamera hilft dir dabei, deine Haltung zu sehen. Im Fortschritt siehst du später, wie sich deine Technik entwickelt.</p><div class="row"><button class="pl" data-t="beg">Anfänger-Pfad öffnen</button><button data-cmgo="match">🎮 Match ausprobieren</button></div>'}
+ if(!adv){e.innerHTML="";e.hidden=true}
  else{var a=anAtt(),l=a[a.length-1],txt=l?"Letzter Versuch: "+l.dur.toFixed(1)+" s, Linien-Score "+l.score+(l.top&&l.top.length&&AN.ERR[l.top[0]]?" · häufigster Punkt: "+AN.ERR[l.top[0]].name:""):"Noch keine Aufnahme gespeichert.";
-  e.innerHTML='<h3>🎯 Dein Fokus heute</h3><p class="cap">Plan abarbeiten, danach eine gezielte Aufnahme mit Analyse. '+txt+'</p><div class="row"><button class="pl" data-cmgo="pose">📹 Aufnahme starten</button><button data-cmgo="hist">📈 Verlauf ansehen</button></div>'}}
+  e.hidden=false;e.innerHTML='<h3>🎯 Dein Fokus heute</h3><p class="cap">Plan abarbeiten, danach eine gezielte Aufnahme mit Analyse. '+txt+'</p><div class="row"><button class="pl" data-cmgo="pose">📹 Aufnahme starten</button><button data-cmgo="hist">📈 Verlauf ansehen</button></div>'}}
 var _sp0=showPage;showPage=function(p){_sp0(p);if(p==="today")try{renderAdapt()}catch(x){}};
 var _al0=applyLevel;applyLevel=function(){_al0();try{renderAdapt()}catch(x){}};
 showPage("today");renderCam();setVoice(false);profInit();heroStart();applyLevel();
