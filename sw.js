@@ -1,5 +1,5 @@
 /* Handstand-Coach Service Worker. VERSION bei jeder neuen App-Version ändern. */
-var VERSION="20261107-1707",SHELL="hs-shell-"+VERSION,RUNTIME="hs-runtime-v1";
+var VERSION="20261107-1720",SHELL="hs-shell-"+VERSION,RUNTIME="hs-runtime-v1";
 var CORE=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png","./icons/icon-maskable-512.png","./icons/apple-touch-icon.png"];
 self.addEventListener("install",function(e){e.waitUntil(caches.open(SHELL).then(function(c){return c.addAll(CORE)}).then(function(){return self.skipWaiting()}))});
 self.addEventListener("activate",function(e){e.waitUntil(caches.keys().then(function(ks){return Promise.all(ks.filter(function(k){return k.indexOf("hs-shell-")===0&&k!==SHELL}).map(function(k){return caches.delete(k)}))}).then(function(){return self.clients.claim()}))});

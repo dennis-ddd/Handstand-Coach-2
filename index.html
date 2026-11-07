@@ -293,13 +293,14 @@ html,body{background:#0B0C0F;color:#F3F4F6}
 .backmt{background:transparent;border:0;color:#3DE0C4;padding:4px 0;font-weight:600}
 .remb{display:flex;align-items:center;gap:12px;margin-bottom:12px;border-color:#5A3F1C;background:linear-gradient(135deg,#2A2118,#16181D)}.remb span{font-size:24px}.remb div{flex:1}.remb small{display:block;color:#8E94A0}.fl input[type=time]{background:#16181D;color:#F3F4F6;border:1px solid #2A2D34;border-radius:12px;padding:8px}
 .chkr{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:transparent;border:0;border-bottom:1px solid #20232A;padding:10px 0;color:#F3F4F6}.chkr .bx{width:22px;height:22px;border-radius:6px;border:2px solid #3A3F4A;display:grid;place-items:center;flex:none;color:#04201B;font-weight:700}.chkr[aria-pressed=true] .bx{background:#3DE0C4;border-color:#3DE0C4}
+.itk{margin-bottom:12px;border-color:#2B6F66;background:linear-gradient(160deg,#12332D,#16181D 60%)}.opt{display:block;width:100%;text-align:left;background:#16181D;border:1px solid #2A2D34;border-radius:16px;padding:12px;margin-top:8px;color:#F3F4F6}.opt small{display:block;color:#8E94A0;margin-top:2px}.opt[aria-pressed=true]{border-color:#3DE0C4;background:#12332D;color:#F3F4F6}.opt[aria-pressed=true] small{color:#9fd8cf}.itk button:disabled{opacity:.4}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
 <main>
 <div class="page" id="p-today">
 <section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-cmgo="file">🎞 Video prüfen</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"></div></section>
-<div class="hs3" id="hs3"></div><div id="hrem"></div>
+<div id="intake" class="intake" hidden></div><div class="hs3" id="hs3"></div><div id="hrem"></div>
 <section class="card adapt" id="adapt"></section>
 <div class="qa" role="group" aria-label="Training"><button data-pg="cal"><span class="ti">📅</span>Kalender</button><button data-pg="prog"><span class="ti">📈</span>Fortschritt</button><button data-t="beg"><span class="ti">🌱</span>Lernen</button><button data-pg="lib"><span class="ti">📚</span>Übungen</button></div>
 <section class="card nxt" id="nxt"></section>
@@ -709,9 +710,9 @@ function dose(e,l){const x=Math.max(0,l-e.tier);if(e.kind==="r")return `${Math.m
  const s=Math.min(e.cat==="d"?3:5,2+Math.floor(x/2)),sec=Math.min(e.base*3,e.base+(e.cat==="d"?Math.min(x,3)*4:x*5));return `${s} × ${sec} s${e.side?" je Seite":""}`}
 function session(date){const k=dk(date),l=inten(),G=st.plan.goal,rnd=mulberry(seedOf(k+G+st.plan.level));
  const prev=Object.keys(st.days).filter(x=>x<k&&st.days[x].items).sort().pop(),last=prev?st.days[prev].items.map(i=>i.id):[];
- const pool=c=>EXL.filter(e=>e.cat===c&&(c==="d"?e.tier<=Math.min(4,1+Math.ceil(l/2)):e.tier<=l&&e.tier>=Math.max(1,l-3)));
+ const pool0=c=>EXL.filter(e=>e.cat===c&&(c==="d"?e.tier<=Math.min(4,1+Math.ceil(l/2)):e.tier<=l&&e.tier>=Math.max(1,l-3))),pool=c=>{const a=pool0(c),f=a.filter(e=>!(typeof itNoWall==="function"&&itNoWall(e)));return f.length?f:a};
  const nD=3+(l>=4?1:0)+(G==="flex"?1:0),nU=Math.max(1,2+(l>=3?1:0)+(l>=6?1:0)-(G==="flex"?1:0));
- const pick=(arr,n)=>{const a=arr.filter(e=>!last.includes(e.id)),src=a.length>=n?a:arr,w=src.map(e=>({e,k:-Math.log(rnd()||1e-9)/(e.tags.includes(G)?2:1)}));w.sort((x,y)=>x.k-y.k);return w.slice(0,n).map(x=>x.e)};
+ const pick=(arr,n)=>{const a=arr.filter(e=>!last.includes(e.id)),src=a.length>=n?a:arr,w=src.map(e=>({e,k:-Math.log(rnd()||1e-9)/((e.tags.includes(G)?2:1)*(typeof intBoost==="function"?intBoost(e):1))}));w.sort((x,y)=>x.k-y.k);return w.slice(0,n).map(x=>x.e)};
  return{l,items:[...pick(pool("d"),nD),...pick(pool("u"),nU)].map(e=>({id:e.id,dose:dose(e,l)}))}}
 function getDay(date){const k=dk(date);let d=st.days[k];if(!d||!d.items){const s=session(date);d=st.days[k]={...(d||{}),items:s.items,done:[],fin:false,l:s.l};save()}return d}
 function toast(t){const e=$("toast");e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(()=>{e.hidden=true},3600)}
@@ -1574,6 +1575,50 @@ function renderKnow(){var b=$("beg"),a=$("adv");if(!b||!a)return;var old=$("know
  var q=$("know3");if(!q){var h='<section class="card" id="know3"><details><summary>Quellen dieser Hinweise</summary><p class="cap">Zusammengefasst und in eigenen Worten wiedergegeben aus Artikeln von prinz-sportlich.de, fitnessfirst.de, dieringe.com, achilles-running.de, ericflag.com und lucalisthenics.de. Die Artikel sind teils von Anbietern verfasst und widersprechen sich bei Details wie dem Wandabstand (10 bis 30 Zentimeter). Die App nutzt die Mittelwerte und deine Rückmeldung.</p></details></section>';var m=$("p-learn");if(m)m.insertAdjacentHTML("beforeend",h)}}
 document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!b.dataset.chk)return;var c=chkLoad();c[b.dataset.chk]=!c[b.dataset.chk];try{localStorage.setItem(CHK,JSON.stringify(c))}catch(x){}renderKnow()});
 renderKnow();
+
+
+/* ===== Anfänger-Einstieg: Voraussetzungen erfassen, Übungen darauf abstimmen ===== */
+var ITK="hs-intake-v1",IS={step:0,x:null,c:{},n:{}},ITCOL="Mein Einstieg";
+function itLoad(){try{var o=JSON.parse(localStorage.getItem(ITK)||"null");return o&&o.done?o:null}catch(e){return null}}
+function itSave(o){try{localStorage.setItem(ITK,JSON.stringify(o))}catch(e){}}
+var ITX=[["Noch nie probiert","Ich habe noch keinen Handstand versucht oder nur kurz getestet."],["An der Wand, wenige Sekunden","Ich komme an die Wand, halte aber nur kurz."],["An der Wand sicher","Ich stehe sicher an der Wand und probiere freie Versuche."]],
+ ITC=[["a","Arme gerade über den Kopf, ohne Hohlkreuz"],["h","Hollow-Hold etwa 10 Sekunden"],["p","Hand-Plank 30 bis 45 Sekunden"],["l","Liegender Handstand etwa 30 Sekunden"]],
+ ITN=[["wr","Meine Handgelenke sind oft steif oder tun weh"],["sh","Meine Schultern sind eng oder unbeweglich"],["nw","Ich habe keine freie Wand zum Üben"],["hd","Ich habe nur harten Boden, keine Matte"]];
+function itRecs(o){var g=[],r=[],add=function(L,id,why){if(!LIBM[id]||L.some(function(q){return q.id===id}))return;L.push({id:id,why:why})};
+ if(o.n.wr){add(g,"s11","Handgelenke vorbereiten");add(g,"h3","Handgelenke vorbereiten")}
+ if(!o.c.a||o.n.sh){add(g,"s9","Schultern öffnen");add(g,"s10","Schultern öffnen")}
+ if(!o.c.h)add(g,"h1","Bauchspannung aufbauen");
+ if(!o.c.p)add(g,"n1","Körperspannung aufbauen");
+ if(!o.c.l)add(g,"h2","Rückenlinie aufbauen");
+ if(!o.c.a)add(g,"s13","Schultern öffnen");
+ if(o.n.wr)add(g,"s2","Handgelenke vorbereiten");
+ g=g.slice(0,5);
+ var path=o.x===0?["h4","h5","h6","h7","n8"]:o.x===1?["h8","h9","h10","h11","n7","n8"]:["h12","n9","n7","n8","h13"],pw=o.x===0?"Erste Stufen":o.x===1?"Wand-Training":"Freie Versuche",p2=[];
+ path.forEach(function(id){var i=LIBM[id];if(o.n.nw&&i&&i.ort&&i.ort.indexOf("Wand")>=0)return;add(p2,id,pw)});
+ if(o.n.nw&&!p2.some(function(q){return["h4","h5","h6"].indexOf(q.id)>=0}))["h4","h5","h6"].forEach(function(id){add(p2,id,"Ohne Wand starten")});
+ return g.concat(p2.filter(function(q){return!g.some(function(z){return z.id===q.id})}).slice(0,5))}
+function itNoWall(e){var o=itLoad(),i=LIBM[e.id];return!!(o&&o.n&&o.n.nw&&i&&i.ort&&i.ort.indexOf("Wand")>=0)}
+function intBoost(e){var o=itLoad();if(!o)return 1;return itRecs(o).some(function(q){return q.id===e.id})?3:1}
+function itChips(o){var g=[];if(!o.c.a)g.push("Schulterbeweglichkeit");if(!o.c.h)g.push("Bauchspannung");if(!o.c.p)g.push("Stützkraft");if(!o.c.l)g.push("Rückenlinie");if(o.n.wr)g.push("Handgelenke");return g}
+function itWizard(){var h='<section class="card itk"><span class="eyebrow">Dein Einstieg · Schritt '+(IS.step+1)+' von 3</span>';
+ if(IS.step===0){h+='<h2 style="margin:4px 0 6px">Wo stehst du?</h2><p class="cap">Wähle, was am besten passt. So starten wir an der richtigen Stelle.</p>'+ITX.map(function(x,i){return'<button class="opt" data-in="x" data-iv="'+i+'" aria-pressed="'+(IS.x===i)+'"><b>'+x[0]+'</b><small>'+x[1]+'</small></button>'}).join("")}
+ else if(IS.step===1){h+='<h2 style="margin:4px 0 6px">Was kannst du schon?</h2><p class="cap">Hak nur an, was du sicher kannst. Der Rest wird zuerst aufgebaut.</p>'+ITC.map(function(x){return'<button class="chkr" data-in="c" data-iv="'+x[0]+'" aria-pressed="'+!!IS.c[x[0]]+'"><span class="bx">'+(IS.c[x[0]]?"✓":"")+'</span><span>'+x[1]+'</span></button>'}).join("")}
+ else{h+='<h2 style="margin:4px 0 6px">Worauf sollen wir achten?</h2><p class="cap">Wähle alles, was zutrifft, oder nichts.</p>'+ITN.map(function(x){return'<button class="chkr" data-in="n" data-iv="'+x[0]+'" aria-pressed="'+!!IS.n[x[0]]+'"><span class="bx">'+(IS.n[x[0]]?"✓":"")+'</span><span>'+x[1]+'</span></button>'}).join("")}
+ h+='<div class="row" style="margin-top:12px">'+(IS.step>0?'<button class="ghost" data-in="back">Zurück</button>':"")+'<button class="pl" data-in="'+(IS.step===2?"done":"next")+'"'+(IS.step===0&&IS.x===null?" disabled":"")+'>'+(IS.step===2?"Meinen Weg ansehen":"Weiter")+'</button></div></section>';return h}
+function itSummary(o){var rs=itRecs(o),done=rs.filter(function(q){return st.dn[q.id]}).length,nx=rs.filter(function(q){return!st.dn[q.id]}).slice(0,3),g=itChips(o);
+ return'<section class="card itk"><span class="eyebrow">Dein Einstiegsweg</span><h2 style="margin:4px 0 4px">'+ITX[o.x][0]+'</h2>'+(g.length?'<p class="cap">Zuerst aufbauen: '+g.join(", ")+'</p>':'<p class="cap">Deine Voraussetzungen passen. Du kannst direkt in die Handstand-Übungen.</p>')+'<div class="mbar"><i style="width:'+(rs.length?done/rs.length*100:0).toFixed(0)+'%;background:linear-gradient(90deg,#3DE0C4,#1D8FE0)"></i></div><p class="cap">'+done+' von '+rs.length+' Übungen abgeschlossen</p>'+nx.map(function(q){var i=LIBM[q.id];return'<button class="mglink" data-lib="'+q.id+'" style="margin-top:8px"><span>'+i.ic+'</span><div><b>'+esc(i.n)+'</b><small>'+q.why+'</small></div><i>›</i></button>'}).join("")+(o.n.nw?'<p class="cap">Ohne Wand: Starte mit den Stützübungen. Für die Wand-Schritte suche dir eine freie Wand oder Tür.</p>':"")+'<div class="row" style="margin-top:12px"><button class="pl" data-in="go">Alle meine Übungen</button><button class="ghost" data-in="redo">Angaben ändern</button></div></section>'}
+function renderIntake(){var e=$("intake");if(!e)return;var beg=false;try{beg=st.plan.level==="beg"}catch(x){}var hh=$("hero");if(!beg){e.innerHTML="";e.hidden=true;if(hh)hh.style.display="";return}e.hidden=false;var o=itLoad();if(hh)hh.style.display=o?"":"none";e.innerHTML=o&&IS.step!==-1?itSummary(o):itWizard()}
+function itFinish(){var o={done:true,x:IS.x===null?0:IS.x,c:IS.c,n:IS.n,ts:Date.now()};itSave(o);var rs=itRecs(o);st.col[ITCOL]=rs.map(function(q){return q.id});
+ try{var c=JSON.parse(localStorage.getItem(CHK)||"{}");ITC.forEach(function(x){c["b"+x[0]]=!!o.c[x[0]]});c.bw=!o.n.wr;localStorage.setItem(CHK,JSON.stringify(c))}catch(x){}
+ save();try{planChanged()}catch(x){}try{renderKnow()}catch(x){}IS.step=0;renderIntake();toast("Dein Einstiegsweg ist bereit")}
+function itGo(){var o=itLoad();if(o&&!st.col[ITCOL])st.col[ITCOL]=itRecs(o).map(function(q){return q.id});LS.col="c:"+ITCOL;showPage("lib");try{renderLib()}catch(x){}}
+document.addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!b.dataset.in)return;var k=b.dataset.in,v=b.dataset.iv;
+ if(k==="x"){IS.x=+v}else if(k==="c"){IS.c[v]=!IS.c[v]}else if(k==="n"){IS.n[v]=!IS.n[v]}else if(k==="next"){IS.step++}else if(k==="back"){IS.step--}
+ else if(k==="done"){itFinish();itGo();return}else if(k==="go"){itGo();return}else if(k==="redo"){var o=itLoad();if(o){IS.x=o.x;IS.c=o.c||{};IS.n=o.n||{}}try{localStorage.removeItem(ITK)}catch(x){}IS.step=0}
+ renderIntake()});
+var _sp1=showPage;showPage=function(p){_sp1(p);if(p==="today")renderIntake()};
+var _al1=applyLevel;applyLevel=function(){_al1();renderIntake()};
+renderIntake();
 
 renderHomeStats();renderHomeRem();
 anUI();mtRenderLv();
