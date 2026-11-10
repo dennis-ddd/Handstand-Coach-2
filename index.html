@@ -1051,7 +1051,7 @@ const NMV=[
 {id:"n9",h0:0,wall:1,fr:[{hs:186,c:"Rücken zur Wand, die Fersen berühren sie"},{hs:181,c:"Die Fingerspitzen drücken, die Füße lösen sich leicht"},{hs:177,c:"Linie halten, das Gleichgewicht kommt aus den Fingern"},{hs:186,c:"Kippt es: mit den Handballen gegenhalten, Füße zurück an die Wand"}]},
 {id:"n10",h0:0,fr:[{c:"Stabiler Handstand, Hände schulterbreit"},{ws:.2,la:-8,c:"Das Gewicht wandert langsam über eine Hand"},{ws:.08,la:-10,two:.55,fm:1,a1t:180,a1l:60,c:"Die andere Hand löst sich kurz vom Boden"},{c:"Zurück zu beiden Händen, dann die andere Seite"}]},
 {id:"n7",h0:0,fr:[{c:"Handstand, genug Platz neben dir"},{be:24,la:-6,c:"Beim Kippen die Beine zur Seite öffnen"},{be:55,la:-10,ps:168,c:"Ein Bein sinkt seitlich ab, du bleibst kontrolliert"},{be:75,la:-14,ps:150,c:"Das Bein setzt neben der Hand auf (die Drehung in den Stand siehst du hier nicht)"}]},
-{id:"n4",h0:0,fr:[{hs:122,ps:70,ka:0,wf:.35,c:"V-Stütz: Po hoch, Arme gestreckt"},{hs:118,ps:70,ka:0,wf:.35,ae:76,c:"Ellbogen beugen, der Kopf sinkt zwischen die Hände"},{hs:112,ps:70,ka:0,wf:.35,ae:60,c:"Tiefster Punkt, Ellbogen nah am Körper"},{hs:122,ps:70,ka:0,wf:.35,c:"Kontrolliert zurück nach oben drücken"}]},
+{id:"n4",h0:0,fr:[{hs:122,ps:70,ka:0,wf:.35,c:"V-Stütz: Po hoch, Arme gestreckt"},{hs:131,ps:70,ka:0,wf:.35,ae:76,c:"Ellbogen beugen, der Kopf sinkt zwischen die Hände"},{hs:139,ps:70,ka:0,wf:.35,ae:60,c:"Tiefster Punkt, Ellbogen nah am Körper"},{hs:122,ps:70,ka:0,wf:.35,c:"Kontrolliert zurück nach oben drücken"}]},
 {id:"n5",h0:0,fr:[{hs:122,ps:70,ka:0,wf:.35,c:"V-Stütz: Po hoch, Arme gestreckt"},{hs:122,ps:70,ka:0,wf:.35,ws:.2,la:-4,c:"Das Gewicht wandert auf eine Hand"},{hs:122,ps:70,ka:0,wf:.35,ws:.1,two:.55,fm:1,a1t:180,a1l:60,c:"Die andere Hand tippt zur Schulter, das Becken bleibt ruhig"},{hs:122,ps:70,ka:0,wf:.35,c:"Zurück, dann die Gegenseite"}]},
 {id:"n1",h0:0,fr:[{hs:69.3,ps:180,ka:0,c:"Liegestützposition (Plank): eine gerade Linie von Kopf bis Ferse"},{hs:68.5,ps:180,ka:0,c:"Po fest, Schulterblätter auseinander, Rippen unten"}]}
 ];
@@ -1155,74 +1155,88 @@ function renderMini(){const ds=weekDates(),td=tdk();$("mini").innerHTML=`<span c
 function renderHero(){const L=lvlOf(st.xp),now=new Date();$("hlv").textContent=`Level ${L} · ${LVN[L-1]}`;if($("hgr"))$("hgr").textContent=(typeof PROFILE!=="undefined"&&PROFILE)?`Hallo, ${PROFILE.name} 👋`:"";let t;if(isTrain(now)){const d=getDay(now);t=d.fin?"Heute geschafft. Stark! 🎉":`Heute: ${d.items.length} Übungen, ca. ${estMin(d.items)} Min.`}else t="Heute ist Ruhetag. Morgen geht's weiter.";const sk=streak();$("hnx").textContent=t+(sk>1?` · ${sk} Tage in Folge`:"")}
 /* ---- Start-Animation: Seitenansicht mit gestreckten/gebeugten Füßen, mehrere Bewegungen ---- */
 const HN=(function(){
- const R=d=>d*Math.PI/180,pl=(o,l,a)=>[o[0]+l*Math.sin(R(a)),o[1]-l*Math.cos(R(a))];
- const LA=96,TR1=52,TR2=53,TH=62,SH=60,FT=26,W=[176,366];
- const bi=(a,b,t)=>a+(b-a)*t;
- function legPos(H,th,r,s){ // Ankel-Ziel aus Richtung th und Streckung r; Knie nach vorn (Brustseite)
-  const L=TH+SH,d=Math.max(Math.min(L*r,L-.01),Math.abs(TH-SH)+1);
-  const al=Math.acos(Math.max(-1,Math.min(1,(TH*TH+d*d-SH*SH)/(2*TH*d))));
-  const K=pl(H,TH,th-s*al*180/Math.PI),A=pl(H,d,th);return{K,A}}
- function fk(p){
-  const S=pl(W,LA,p.a),E0=[(W[0]+S[0])/2,(W[1]+S[1])/2],nx=Math.cos(R(p.a)),ny=Math.sin(R(p.a)),E=[E0[0]+nx*p.e,E0[1]+ny*p.e];
-  const M=pl(S,TR1,p.t+p.c),H=pl(M,TR2,p.t),D=pl(S,30,p.t+180+p.hd);
-  const mkLeg=(th,r,pf,fl)=>{const q=legPos(H,th,r,1),sh=Math.atan2(q.A[0]-q.K[0],-(q.A[1]-q.K[1]))*180/Math.PI;
-   let ta=sh-pf;ta=fl>0?ta+((((90-ta+540)%360)-180)*fl):ta;
-   return{K:q.K,A:q.A,T:pl(q.A,FT,ta),ta:ta}};
-  return{S,E,M,H,D,L1:mkLeg(p.th1,p.r1,p.pf1,p.w1),L2:mkLeg(p.th2,p.r2,p.pf2,p.w2)}}
- const P=o=>Object.assign({a:0,e:0,t:0,c:0,hd:0,th1:0,r1:1,pf1:0,w1:0,th2:0,r2:1,pf2:0,w2:0},o);
- // Hilfsfunktion: Pose so wählen, dass der Knöchel eines Beins auf dem Boden steht
- function ground(base,which,ax,ay,pf,w){const o=P(base),f=fk(o),H=f.H,dx=ax-H[0],dy=ay-H[1],d=Math.hypot(dx,dy),th=Math.atan2(dx,-dy)*180/Math.PI;
-  o["th"+which]=th;o["r"+which]=Math.min(1,d/(TH+SH));o["pf"+which]=pf;o["w"+which]=w==null?0:w;return o}
- // ----- Bewegungsfolgen -----
- const HS=P({}),HSP={pf1:0,pf2:0};
- const start=P({a:12,t:-66,c:6,hd:-8,e:0}); // Lauf-/Ausfallposition
- const k0=ground(start,1,132,356,100,1);k0.th2=-136;k0.r2=1;k0.pf2=0;
- const k1=P({a:9,t:-50,c:4,hd:-6,th1:-166,r1:.9,pf1:70,w1:0,th2:-108,r2:1,pf2:0});
- const k1g=ground(k1,1,138,352,60,.3);k1.th1=k1g.th1;k1.r1=k1g.r1;k1.pf1=60;k1.w1=.3;
- const k2=P({a:5,t:-28,c:2,hd:-3,th1:-128,r1:.97,pf1:25,th2:-34,r2:1,pf2:0});
- const k3=P({a:1,t:-6,c:-2,hd:0,th1:-12,r1:1,pf1:0,th2:-5,r2:1,pf2:0});
- const hold=P({a:0,t:0,hd:0,th1:-2,r1:1,pf1:0,th2:2,r2:1,pf2:0});
- const tuck=P({a:0,t:3,c:-4,hd:6,th1:-132,r1:.56,pf1:28,th2:-150,r2:.52,pf2:28});
- const split=P({a:0,t:0,hd:2,th1:-50,r1:1,pf1:0,th2:48,r2:1,pf2:0});
- const flex=P({a:0,t:0,hd:0,th1:-4,r1:1,pf1:80,th2:4,r2:1,pf2:80});
- const sway1=P({a:-1,t:-3,th1:-5,th2:0,r1:1,r2:1}),sway2=P({a:1,t:3,th1:0,th2:5,r1:1,r2:1});
- const SEQ=[
-  {cap:"Schwung in den Handstand",f:[[k0,0,900],[k1,520,0],[k2,460,0],[k3,430,0],[hold,520,900],[k3,520,0],[k2,560,0],[k0,720,500]]},
-  {cap:"Füße strecken statt anwinkeln",f:[[hold,900,300],[flex,700,1000],[hold,700,1100]]},
-  {cap:"Hocke im Handstand",f:[[hold,700,300],[tuck,950,900],[hold,950,700]]},
-  {cap:"Spagat im Handstand",f:[[hold,700,300],[split,1100,1100],[hold,1000,600]]},
-  {cap:"Balance über die Finger",f:[[hold,700,0],[sway1,900,0],[sway2,1100,0],[sway1,1100,0],[hold,900,500]]}];
- function drawTo(g,f,pose){
-  const o=fk(pose),ln=(a,b,w,c,op)=>`<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}" stroke="${c||'var(--c)'}" stroke-width="${w}" stroke-linecap="round" fill="none" ${op?'opacity="'+op+'"':''}/>`;
-  const pl2=(a,b,c,w,col,op)=>ln(a,b,w,col,op)+ln(b,c,w*.78,col,op);
-  const leg=(L,col,op)=>pl2(o.H,L.K,L.A,19,col,op)+`<circle cx="${L.A[0].toFixed(1)}" cy="${L.A[1].toFixed(1)}" r="7" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`+ln(L.A,L.T,11,col,op)+`<circle cx="${L.T[0].toFixed(1)}" cy="${L.T[1].toFixed(1)}" r="5" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`;
-  const far='var(--c2)';
-  g.innerHTML=leg(o.L2,far)+
-   ln(o.S,o.M,25,far,.0)+
-   ln(o.S,o.M,26)+ln(o.M,o.H,23)+
-   leg(o.L1)+
-   ln(W,[W[0]+22,W[1]+2],8)+
-   ln(W,o.E,13)+ln(o.E,o.S,14)+
-   `<circle cx="${o.D[0].toFixed(1)}" cy="${o.D[1].toFixed(1)}" r="15" fill="var(--c)"/>`}
- function mount(host,capEl){
-  const ns="http://www.w3.org/2000/svg",s=document.createElementNS(ns,"svg");s.setAttribute("viewBox","0 6 300 394");s.setAttribute("role","img");s.setAttribute("aria-label","Animation: Schwung in den Handstand und Handstand-Variationen");
-  s.innerHTML='<ellipse cx="176" cy="373" rx="86" ry="6" fill="rgba(0,0,0,.22)"/><rect x="10" y="372" width="280" height="3" rx="1.5" fill="var(--c2)" opacity=".6"/><g class="hg"></g>';
-  host.appendChild(s);const g=s.querySelector(".hg");
-  const ez=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
-  let cur=P({}),si=0,fi=0,from=cur,to=cur,t0=0,dur=1,holdT=0,state="go";
-  if(typeof reduce!=="undefined"&&reduce){drawTo(g,0,hold);if(capEl)capEl.textContent="Handstand";return}
-  const setCap=()=>{if(capEl)capEl.textContent=SEQ[si].cap};
-  function nextKey(n){const q=SEQ[si].f;if(fi>=q.length){si=(si+1)%SEQ.length;fi=0;setCap()}const k=SEQ[si].f[fi++];from=cur;to=k[0];dur=Math.max(1,k[1]);holdT=k[2];t0=n;state="go"}
-  setCap();cur=SEQ[0].f[0][0];from=to=cur;nextKey(performance.now());
-  function frame(n){if(!s.isConnected){return}
-   if(s.parentElement.offsetParent){
-    if(state==="go"){const t=Math.min(1,(n-t0)/dur),e=ez(t);const o={};for(const k in to)o[k]=bi(from[k],to[k],e);cur=o;if(t>=1){state="hold";t0=n}}
-    else if(n-t0>=holdT){nextKey(n)}
-    const sw=(si>0||fi>3&&fi<7)?Math.sin(n/600)*0.9:0,o2=Object.assign({},cur);o2.a+=sw*.5;o2.th1+=sw;o2.th2-=sw*.6;
-    drawTo(g,0,o2)}
-   requestAnimationFrame(frame)}
-  requestAnimationFrame(frame);return s}
- return{mount,fk,P,SEQ,drawTo,hold,bi}
+  const R=d=>d*Math.PI/180,pl=(o,l,a)=>[o[0]+l*Math.sin(R(a)),o[1]-l*Math.cos(R(a))];
+  const LA=96,TR1=52,TR2=53,TH=62,SH=60,FT=26,W=[196,366],GY=365.5,PIN=[null,[30,GY],[128,GY]];
+  const bi=(a,b,t)=>a+(b-a)*t;
+  // Bein: Knöchel-Richtung th (0 = senkrecht nach oben, positiv = im Uhrzeigersinn), Streckung r; das Knie liegt gegen den Uhrzeigersinn der Linie Hüfte-Knöchel
+  function legPos(H,th,r){
+   const L=TH+SH,d=Math.max(Math.min(L*r,L-.01),Math.abs(TH-SH)+1);
+   const al=Math.acos(Math.max(-1,Math.min(1,(TH*TH+d*d-SH*SH)/(2*TH*d))));
+   return{K:pl(H,TH,th-al*180/Math.PI),A:pl(H,d,th)}}
+  function fk(p){
+   const S=pl(W,LA,p.a),E0=[(W[0]+S[0])/2,(W[1]+S[1])/2],nx=Math.cos(R(p.a)),ny=Math.sin(R(p.a)),E=[E0[0]+nx*p.e,E0[1]+ny*p.e];
+   const M=pl(S,TR1,p.t+p.c),H=pl(M,TR2,p.t),D=pl(S,30,p.t+180+p.hd);
+   const mkLeg=(i,th,r,pf,fl)=>{const g=p["g"+i];
+    if(g>0){const T=PIN[i],dx=T[0]-H[0],dy=T[1]-H[1];let t2=Math.atan2(dx,-dy)*180/Math.PI;t2+=360*Math.round((th-t2)/360);th=bi(th,t2,g);r=bi(r,Math.min(Math.hypot(dx,dy)/(TH+SH),1),g)}
+    const q=legPos(H,th,r),sh=Math.atan2(q.A[0]-q.K[0],-(q.A[1]-q.K[1]))*180/Math.PI;
+    let ta=sh-pf;ta=fl>0?ta+((((90-ta+540)%360)-180)*fl):ta;
+    return{K:q.K,A:q.A,T:pl(q.A,FT,ta),ta:ta}};
+   return{S,E,M,H,D,L1:mkLeg(1,p.th1,p.r1,p.pf1,p.w1),L2:mkLeg(2,p.th2,p.r2,p.pf2,p.w2)}}
+  const P=o=>Object.assign({z:0,a:0,e:0,t:0,c:0,hd:0,th1:0,r1:1,pf1:0,w1:0,g1:0,th2:0,r2:1,pf2:0,w2:0,g2:0},o);
+  const KEYS=Object.keys(P({}));
+  // ----- Posen. Bein 1 = nahes (weißes) Schwungbein, Bein 2 = fernes (graues) Abdruckbein -----
+  const HS=P({th1:.6,th2:-.6});
+  const L0=P({z:1,a:4,t:-90,c:8,hd:-14,g1:1,w1:1,pf1:0,g2:1,w2:1,pf2:0,th1:-150,th2:-188});
+  const L0b=P({z:1,a:3.5,t:-88,c:7.5,hd:-13,th1:-134,r1:1,pf1:0,w1:1,g2:1,w2:1,th2:-187});
+  const L1=P({z:1,a:3,t:-86,c:7,hd:-12,th1:-124,r1:1,pf1:0,w1:0,g2:1,w2:1,th2:-186});
+  const L2=P({z:1,a:2,t:-72,c:6,hd:-10,th1:-62,r1:1,w1:0,g2:1,w2:.85,th2:-184});
+  const L3=P({z:.9,a:1,t:-54,c:4,hd:-8,th1:-30,r1:1,g2:.0,w2:0,th2:-184,r2:.93,pf2:30});
+  const L4=P({z:.8,a:1,t:-30,c:2,hd:-5,th1:-10,r1:1,th2:-128,r2:.96,pf2:10});
+  const L5=P({z:.45,a:0,t:-12,c:0,hd:-2,th1:-3,r1:1,th2:-38});
+  const tuck=P({th1:-50,r1:.38,pf1:30,th2:-54,r2:.36,pf2:30,t:0,hd:4});
+  const tuckM=P({th1:-24,r1:.68,pf1:15,th2:-26,r2:.66,pf2:15});
+  const flex=P({th1:.6,pf1:80,th2:-.6,pf2:80});
+  const split=P({hd:2,th1:-50,th2:48});
+  const sw1=P({a:-1,t:-2,th1:-4,th2:-5}),sw2=P({a:1,t:2,th1:4,th2:3});
+  // Schlüsselbild: [Pose, Anreisezeit ms, Haltezeit ms]
+  const SEQ=[
+   {cap:"Schwung in den Handstand",f:[[L0,0,700],[L0b,230,0],[L1,260,0],[L2,330,0],[L3,300,0],[L4,260,0],[L5,260,0],[HS,380,1500]]},
+   {cap:"Füße strecken statt anwinkeln",f:[[HS,0,300],[flex,700,1000],[HS,700,1100]],sway:1},
+   {cap:"Hocke im Handstand",f:[[HS,0,300],[tuckM,420,0],[tuck,520,1000],[tuckM,520,0],[HS,420,700]],sway:1},
+   {cap:"Spagat im Handstand",f:[[HS,0,300],[split,1100,1100],[HS,1000,600]],sway:1},
+   {cap:"Balance über die Finger",f:[[HS,0,0],[sw1,900,0],[sw2,1100,0],[sw1,1100,0],[HS,900,500]],sway:1},
+   {cap:"Kontrolliert zurück in den Ausfallschritt",f:[[HS,0,500],[L5,420,0],[L4,420,0],[L3,380,0],[L2,360,0],[L1,260,0],[L0b,230,0],[L0,300,300]]}];
+  // Zeitleiste mit Hermite-Kurve (ohne Ruckeln an den Schlüsselbildern)
+  function build(seq){
+   let T=0;const ks=seq.f.map((k,i)=>{T+=i?k[1]:0;const o={p:k[0],a:T,d:T+(k[2]||0),hold:k[2]||0};T=o.d;return o});
+   ks.forEach((k,i)=>{k.m={};KEYS.forEach(q=>{let m=0;if(i>0&&i<ks.length-1&&!k.hold){const dl=k.p[q]-ks[i-1].p[q],dr=ks[i+1].p[q]-k.p[q];if(dl*dr>0)m=(ks[i+1].p[q]-ks[i-1].p[q])/(ks[i+1].a-ks[i-1].d)}k.m[q]=m})});
+   return{ks:ks,len:T}}
+  function evalAt(B,t){
+   const ks=B.ks;if(t<=ks[0].d)return ks[0].p;
+   for(let i=0;i<ks.length-1;i++){const k0=ks[i],k1=ks[i+1];
+    if(t<k1.a){const dt=k1.a-k0.d,u=(t-k0.d)/dt,u2=u*u,u3=u2*u,h00=2*u3-3*u2+1,h10=u3-2*u2+u,h01=-2*u3+3*u2,h11=u3-u2,o={};
+     KEYS.forEach(q=>{o[q]=h00*k0.p[q]+h10*dt*k0.m[q]+h01*k1.p[q]+h11*dt*k1.m[q]});return o}
+    if(t<=k1.d)return k1.p}
+   return ks[ks.length-1].p}
+  const BUILT=SEQ.map(build);
+  const vb=z=>{z=Math.max(0,Math.min(1,z));return(71-133*z).toFixed(1)+" 6 "+(250+82*z).toFixed(1)+" 394"};
+  function drawTo(g,f,pose){
+   const o=fk(pose),ln=(a,b,w,c,op)=>`<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}" stroke="${c||'var(--c)'}" stroke-width="${w}" stroke-linecap="round" fill="none" ${op?'opacity="'+op+'"':''}/>`;
+   const pl2=(a,b,c,w,col,op)=>ln(a,b,w,col,op)+ln(b,c,w*.78,col,op);
+   const leg=(L,col,op)=>pl2(o.H,L.K,L.A,19,col,op)+`<circle cx="${L.A[0].toFixed(1)}" cy="${L.A[1].toFixed(1)}" r="7" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`+ln(L.A,L.T,11,col,op)+`<circle cx="${L.T[0].toFixed(1)}" cy="${L.T[1].toFixed(1)}" r="5" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`;
+   const far='var(--c2)';
+   g.innerHTML=leg(o.L2,far)+
+    ln(o.S,o.M,26)+ln(o.M,o.H,23)+
+    leg(o.L1)+
+    ln(W,[W[0]+22,W[1]+2],8)+
+    ln(W,o.E,13)+ln(o.E,o.S,14)+
+    `<circle cx="${o.D[0].toFixed(1)}" cy="${o.D[1].toFixed(1)}" r="15" fill="var(--c)"/>`}
+  function mount(host,capEl){
+   const ns="http://www.w3.org/2000/svg",s=document.createElementNS(ns,"svg");s.setAttribute("viewBox",vb(0));s.setAttribute("preserveAspectRatio","xMidYMax meet");s.setAttribute("role","img");s.setAttribute("aria-label","Animation: Schwung in den Handstand und Handstand-Variationen");
+   s.innerHTML='<ellipse cx="196" cy="373" rx="86" ry="6" fill="rgba(0,0,0,.22)"/><rect x="-80" y="372" width="440" height="3" rx="1.5" fill="var(--c2)" opacity=".6"/><g class="hg"></g>';
+   host.appendChild(s);const g=s.querySelector(".hg");
+   if(typeof reduce!=="undefined"&&reduce){drawTo(g,0,HS);if(capEl)capEl.textContent="Handstand";return}
+   let si=0,tq=0,last=0;const setCap=()=>{if(capEl)capEl.textContent=SEQ[si].cap};setCap();
+   function frame(n){if(!s.isConnected){return}
+    if(s.parentElement.offsetParent){
+     const dt=Math.min(50,last?n-last:16);last=n;tq+=dt;
+     if(tq>=BUILT[si].len){tq=0;si=(si+1)%SEQ.length;setCap()}
+     const o2=Object.assign({},evalAt(BUILT[si],tq));
+     if(SEQ[si].sway){const sw=Math.sin(n/600)*0.9;o2.a+=sw*.5;o2.th1+=sw;o2.th2-=sw*.6}
+     s.setAttribute("viewBox",vb(o2.z));drawTo(g,0,o2)}else last=0;
+    requestAnimationFrame(frame)}
+   requestAnimationFrame(frame);return s}
+  return{mount,fk,P,SEQ,drawTo,hold:HS,bi,BUILT,evalAt,KEYS,vb}
 })();
 
 let heroF=null;function heroStart(){if(heroF||!$("hfig"))return;heroF=HN.mount($("hfig"),$("hcap"))}
