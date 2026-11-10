@@ -482,6 +482,12 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <div id="toast" class="toast" hidden role="status"></div>
 
 <script>
+/* ENTWICKLUNG: bei jedem neuen Build alles auf Start zurücksetzen (zum Abschalten DEV_RESET=false in pwa/build.py) */
+(function(){var B="20261110-1811",DEV="1";if(B.indexOf("__")===0||DEV!=="1")return;try{if(localStorage.getItem("hs-build")===B)return;
+ var k=[];for(var i=0;i<localStorage.length;i++){var n=localStorage.key(i);if(n&&n.indexOf("hs-")===0)k.push(n)}k.forEach(function(n){localStorage.removeItem(n)});
+ try{sessionStorage.clear()}catch(e){}try{indexedDB.deleteDatabase("hs-vid")}catch(e){}
+ localStorage.setItem("hs-build",B)}catch(e){}})();
+
 const $=id=>document.getElementById(id),NS="http://www.w3.org/2000/svg",reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const Rd=d=>d*Math.PI/180,pol=(o,l,a)=>[o[0]+l*Math.sin(Rd(a)),o[1]-l*Math.cos(Rd(a))];
 const Lm=(a,b,w1,w2)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,nx=-dy/l,ny=dx/l;return `M${a[0]+nx*w1} ${a[1]+ny*w1}L${b[0]+nx*w2} ${b[1]+ny*w2}L${b[0]-nx*w2} ${b[1]-ny*w2}L${a[0]-nx*w1} ${a[1]-ny*w1}Z`};
