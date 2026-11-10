@@ -335,6 +335,21 @@ button{border-radius:16px}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid rgba(45,212,191,.6)}
 .sfx{border-color:var(--warn);background:rgba(246,169,74,.14)}
 .lc{gap:4px!important}.lc .hb{border-radius:14px;width:36px;padding:0;flex:none;display:grid;place-items:center}
+.wlc{position:fixed;inset:0;z-index:95;overflow-y:auto;background:var(--bg);color:var(--ink);padding:calc(24px + env(safe-area-inset-top,0px)) 18px 0}.wlin{max-width:520px;margin:0 auto;padding-bottom:120px}
+.wlc h1{font-size:30px;line-height:1.15;margin:6px 0 8px}.wls{color:var(--mute);font-size:16px;line-height:1.5;margin:0 0 18px}.wlc .eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--acc)}
+.wlb{position:fixed;left:0;right:0;bottom:0;padding:14px 18px calc(14px + env(safe-area-inset-bottom,0px));background:linear-gradient(180deg,transparent,var(--bg) 35%);display:grid;gap:4px;max-width:560px;margin:0 auto}.wlb .pl{min-height:52px;width:100%}
+.lph{display:flex;align-items:center;justify-content:space-between;gap:10px}.lph h2{margin:0}.lph .ghost{padding:8px 12px;font-size:14px}
+.pgs{margin:10px 0 14px}.pgs b{font-size:14px}.pgs .bar{margin-top:6px}
+.pth{list-style:none;margin:0;padding:0}.pth li{position:relative;display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;padding-bottom:14px}
+.pth li::before{content:"";position:absolute;left:17px;top:38px;bottom:2px;width:2px;background:var(--line)}.pth li:last-child::before{display:none}
+.pth .pn{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800;background:var(--chip);color:var(--mute)}
+.pth li.cur .pn{background:var(--acc);color:#04201B}.pth li.done .pn{background:var(--acc-soft);color:var(--acc)}
+.pth .pc{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:12px;display:grid;gap:8px;min-width:0}.pth li.cur .pc{border-color:var(--acc)}
+.pth .pv{background:var(--bg);border-radius:14px;overflow:hidden;display:flex;justify-content:center}.pth .pv svg{display:block;max-width:100%}
+.pth .pt{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}.pth .pt b{font-size:16px;line-height:1.3}
+.pth .pc p{margin:0;color:var(--mute);font-size:14px;line-height:1.45}.pth .pc button{min-height:44px;width:100%}
+.pst{flex:none;font-size:12px;font-weight:700;border-radius:99px;padding:3px 10px;background:var(--chip);color:var(--mute)}.pst.cur{background:var(--acc);color:#04201B}.pst.done{background:var(--acc-soft);color:var(--acc)}
+.nxv{flex:none;width:64px;border-radius:12px;background:var(--bg);overflow:hidden;display:flex;align-items:center}.nxv svg{width:100%;height:auto;display:block}.nxt .nx{align-items:center}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
@@ -364,6 +379,7 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <button class="mglink" data-pg="lib" style="margin:0 0 12px;border-style:solid"><span>📚</span><div><b>Übungsbibliothek</b><small>Alle Übungen, Posen und Tricks, sortiert nach Anfänger bis Profi, mit Animationen</small></div><i>›</i></button>
 <div class="tabs seg" id="lt"><button data-t="beg" aria-pressed="true">🌱 Anfänger</button><button data-t="adv" aria-pressed="false">🔥 Fortgeschritten</button></div>
 <div id="beg">
+<div class="lph"><h2 id="lpth">Dein Lernpfad</h2><button class="ghost" data-wlo="1">🌱 Einführung</button></div><div id="lpath"></div>
 <h2 id="steps">8 Schritte zum Handstand</h2><div class="tabs" id="stc"></div>
 <div class="fig"><div class="vwrap"><svg id="vT" viewBox="0 0 300 400" role="img" aria-label="Animation des Lernschritts"></svg></div><div class="state" id="stt"><i></i><span></span></div></div><div class="detail" id="std"></div>
 <h2>Haltung an der Wand</h2><div class="tabs" id="vt"></div>
@@ -478,12 +494,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid 
 <button class="opt" data-lvl="1"><b>🧱 Ich halte den Wandhandstand</b><small>An der Wand klappt es einige Sekunden.</small></button>
 <button class="opt" data-lvl="2"><b>🤸 Ich halte frei, kurz oder länger</b><small>Freier Handstand ist schon möglich.</small></button>
 <button class="opt" data-lvl="3"><b>🔥 Ich übe Einarm und Press</b><small>Du trainierst schon lange und sicher.</small></button></div></div>
+<div id="wlc" class="wlc" role="dialog" aria-modal="true" aria-labelledby="wlct" hidden><div class="wlin"><span class="eyebrow">Willkommen</span><h1 id="wlct">Dein Weg zum Handstand</h1><p class="wls">Lerne Schritt für Schritt die Grundlagen und entwickle deine Handstandtechnik in deinem eigenen Tempo.</p><div id="wlp"></div></div><div class="wlb"><button class="pl" data-wls="go">Meinen Lernpfad starten</button><button class="cibtn" data-wls="x">Später ansehen</button></div></div>
 <div id="sheet" class="sheet" role="dialog" aria-modal="true" aria-labelledby="sht" hidden><div class="shin"><button class="back" data-close="1">← Zurück</button><h2 id="sht"></h2><div id="shc"></div><button class="pl" data-close="1" style="margin-top:18px">Verstanden</button></div></div>
 <div id="toast" class="toast" hidden role="status"></div>
 
 <script>
 /* ENTWICKLUNG: bei jedem neuen Build alles auf Start zurücksetzen (zum Abschalten DEV_RESET=false in pwa/build.py) */
-(function(){var B="20261110-1811",DEV="1";if(B.indexOf("__")===0||DEV!=="1")return;try{if(localStorage.getItem("hs-build")===B)return;
+(function(){var B="20261110-2241",DEV="1";if(B.indexOf("__")===0||DEV!=="1")return;try{if(localStorage.getItem("hs-build")===B)return;
  var k=[];for(var i=0;i<localStorage.length;i++){var n=localStorage.key(i);if(n&&n.indexOf("hs-")===0)k.push(n)}k.forEach(function(n){localStorage.removeItem(n)});
  try{sessionStorage.clear()}catch(e){}try{indexedDB.deleteDatabase("hs-vid")}catch(e){}
  localStorage.setItem("hs-build",B)}catch(e){}})();
@@ -735,7 +752,8 @@ document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)r
  if(d.pl!==undefined)return togglePl(+d.pl);if(d.fb!==undefined)return giveFb(+d.fb);if(d.force)return forceDay();
  if(d.plv){st.plan.level=d.plv;return planChanged()}if(d.plg){st.plan.goal=d.plg;return planChanged()}if(d.plp){st.plan.per=+d.plp;return planChanged()}
  if(d.cal){calM.m+=+d.cal;if(calM.m<0){calM.m=11;calM.y--}if(calM.m>11){calM.m=0;calM.y++}return drawCal()}
- if(d.step!==undefined){showTab("beg");selStep(+d.step);return goTo("steps")}if(d.stp!==undefined)return selStep(+d.stp);if(d.go)return goTo(d.go);
+ if(d.wls){closeWlc();if(d.wls==="go"){const k=nextStep();showTab("beg");selStep(k);goTo("steps")}return}if(d.wlo){return openWlc()}
+ if(d.step!==undefined){if(!$("wlc").hidden)closeWlc();showTab("beg");selStep(+d.step);return goTo("steps")}if(d.stp!==undefined)return selStep(+d.stp);if(d.go)return goTo(d.go);
  if(d.t){showTab(d.t)}
  else if(d.v){vk=d.v;pk="ideal";render()}else if(d.p){pk=d.p;render()}
  else if(d.e){en=+d.e;ei=0;showEn()}else if(d.m!==undefined){setMv(+d.m)}else if(d.sf){setSf(d.sf)}else if(d.vw){view=d.vw;advView()}
@@ -969,6 +987,7 @@ function markDay(k){let r=st.days[k];if(!r||!r.items){const s=session(atD(k));r=
 const TK=[["Liegestützposition (Plank) 3 × # s halten|20","Hollow Hold 3 × # s, nur so lange du sauber bleibst|15","Schulterheben im Stütz, 8 Wiederholungen"],["Liegestützposition (Plank) 3 × # s|25","Hollow Hold 3 × # s|20","Ruhig weiteratmen: 3 bewusste Durchgänge"],["Pike Hold, Füße am Boden 3 × # s|20","Hüfte über die Hände schieben, 8 Wiederholungen","Schultern an der Wand dehnen, 2 × 30 s"],["Pike Hold, Füße erhöht 3 × # s|20","Arme gestreckt halten, nicht einknicken: 3 bewusste Versuche","Schulterheben im Stütz, 8 Wiederholungen"],["Abdrehen am Boden kennenlernen, 5 Wiederholungen","Seitliches Herausdrehen aus niedriger Stützposition, 5 Wiederholungen je Seite","Bewegungsablauf gedanklich durchgehen"],["Bauch zur Wand 3 × # s|25","Füße hochlaufen, 5 Wiederholungen","Hollow Hold 3 × # s|20"],["Handstandposition in der Animation aus allen Blickwinkeln ansehen","Körperlinie prüfen: Arme, Schultern, Bauch","Haltung einmal mit der Kamera überprüfen"],["Eigene Aufnahme mit der Animation vergleichen","Mehrere saubere, kurze Versuche mit Pausen","Einen Hinweis aus der Kamera-Rückmeldung umsetzen"]];
 function tkText(s){const m=s.split("|");if(m.length<2)return s;const b=+m[1],x=b*(1+.05*st.adj),v=b>=15?Math.round(x/5)*5:Math.round(x);return m[0].replace("#",v)}
 const tkDone=i=>TK[i].filter((_,j)=>st.tk[i+"-"+j]).length;
+["Grundlagen kennenlernen","Körperspannung trainieren","Pike Hold – Füße am Boden","Erhöhter Pike Hold","Sicher aus dem Handstand herauskommen","Handstandposition – Bauch zur Wand","Die Handstandposition verstehen","Handstandtechnik überprüfen"].forEach((t,i)=>{STEPS[i].t=t});
 function stdHTML(i){const s=STEPS[i];let o="";if(s.why)o+=`<h3>Warum?</h3><p>${s.why}</p>`;if(s.learn)o+=`<h3>Du lernst</h3><ul>${s.learn.map(x=>`<li>${x}</li>`).join("")}</ul>`;
  if(s.ex){o+=s.ex.length>1?`<h3>Übungen</h3><ol class="stx">${s.ex.map(e=>`<li><b>${e[0]}</b><br>${e[1]}${e[2]?`<br><i>Ziel: ${e[2]}</i>`:""}</li>`).join("")}</ol>`:`<h3>Übung</h3><p>${s.ex[0][1]}</p><p><i>Ziel: ${s.ex[0][2]}</i></p>`}
  if(s.goal)o+=`<h3>Ziel des Schrittes</h3><p>${s.goal}</p>`;if(s.tip&&s.tip.length)o+=`<h3>Darauf achten</h3><ul>${s.tip.map(x=>`<li>${x}</li>`).join("")}</ul>`;if(s.warn)o+=`<div class="sfx">⚠ ${s.warn}</div>`;
@@ -977,7 +996,16 @@ function stdHTML(i){const s=STEPS[i];let o="";if(s.why)o+=`<h3>Warum?</h3><p>${s
 function selStep(i){const n=(stFrom=stCurPose())?1:1;stI=i;stTo=stPose(i);stT0=performance.now();stExr=stExOf(i);
  $("stc").innerHTML=STEPS.map((s,j)=>`<button data-stp="${j}" aria-pressed="${j===i}">${j+1}. ${s.n}</button>`).join("");
  $("stt").lastElementChild.textContent=`${i+1}. ${STEPS[i].t}`;$("std").innerHTML=stdHTML(i);{const w=$("vT")&&$("vT").parentNode;if(w)w.style.opacity=STEPS[i].noAnim?".18":""}}
-function renderLP(){const L=lvlOf(st.xp);$("lp").innerHTML=`<ol class="lpl">${STEPS.map((s,i)=>{const on=L>=i+1,dn=tkDone(i);return `<li class="${on?"un":"lk"}"><span>${dn===3?"🏁":on?"✅":"🔒"}</span><div><b>${i+1}. ${esc(s.t)}</b><small>${on?esc(s.d)+" · Aufgaben "+dn+"/3":"Ab Level "+(i+1)}</small></div><button data-step="${i}">Ansehen</button></li>`}).join("")}</ol><p class="cap">Level: ${LVN.map((n,i)=>(i+1===L?"<b>"+(i+1)+" "+n+"</b>":(i+1)+" "+n)).join(" · ")}</p>`}
+const PVID=["n1","h1","h4","h6","n7","h11","h10","h13"],PVT={n7:.66};
+function prevSVG(i,h){const id=PVID[i],it=LIBM[id],src=it&&playSrc(it);if(!src)return"";const T=src.fr.length-1,o=fk3(poseG(src.fr,T*(PVT[id]||1)));if(!o)return"";return `<svg viewBox="0 0 300 400" style="height:${h}px" role="img" aria-label="Vorschau: ${esc(STEPS[i].t)}"><rect y="372" width="300" height="28" fill="var(--mat)"/>${scene(o,"S",src.h0,src.cane,src.ex||{})}</svg>`}
+function stepState(i){const d=tkDone(i)===3;if(d)return"done";const c=nextStep();return i===c?"cur":"open"}
+const STL={done:"Abgeschlossen",cur:"Aktuell",open:"Offen"};
+function pathHTML(){const n=STEPS.filter((_,i)=>tkDone(i)===3).length;
+ return `<div class="pgs"><b>${n} von ${STEPS.length} Schritten abgeschlossen</b><div class="bar"><i style="width:${Math.round(n/STEPS.length*100)}%"></i></div></div><ol class="pth">${STEPS.map((s,i)=>{const k=stepState(i);return `<li class="${k}"><span class="pn" aria-hidden="true">${k==="done"?"✓":i+1}</span><div class="pc"><div class="pv">${prevSVG(i,k==="cur"?200:150)}</div><div class="pt"><b>${i+1}. ${esc(s.t)}</b><span class="pst ${k}">${STL[k]}</span></div><p>${esc(s.d)}</p><button class="${k==="cur"?"pl":"ghost"}" data-step="${i}">Lerninhalte öffnen</button></div></li>`}).join("")}</ol>`}
+function renderPath(){const e=$("lpath");if(e)e.innerHTML=pathHTML()}
+function openWlc(){$("wlp").innerHTML=pathHTML();$("wlc").hidden=false;$("wlc").scrollTop=0;st.wl=1;save()}
+function closeWlc(){$("wlc").hidden=true}
+function renderLP(){const L=lvlOf(st.xp);$("lp").innerHTML=`<ol class="lpl">${STEPS.map((s,i)=>{const on=L>=i+1,dn=tkDone(i);return `<li class="${on?"un":"lk"}"><span>${dn===3?"🏁":on?"✅":"🔒"}</span><div><b>${i+1}. ${esc(s.t)}</b><small>${on?esc(s.d)+" · Aufgaben "+dn+"/3":"Ab Level "+(i+1)}</small></div><button data-step="${i}">Ansehen</button></li>`}).join("")}</ol><p class="cap">Level: ${LVN.map((n,i)=>(i+1===L?"<b>"+(i+1)+" "+n+"</b>":(i+1)+" "+n)).join(" · ")}</p>`;renderPath()}
 function renderTrain(){renderGoals();renderMini();renderTip();renderNext();renderHero();renderWeek();drawCal();renderLP();applyLevel();$("tmm").textContent=st.best?`Bestzeit: ${fmt(st.best)}`:"Starte den Timer, sobald du im Handstand bist."}
 
 // ======== Übungsbibliothek ========
@@ -1172,10 +1200,10 @@ function hideAdv(i){return st.plan.level==="beg"&&!st.showAdv&&advItem(i)}
 function advVisible(){return st.plan.level!=="beg"||!!st.showAdv}
 function applyLevel(){const hide=!advVisible();$$('[data-t="adv"]').forEach(b=>{b.hidden=hide});if(hide&&$("adv")&&!$("adv").hidden)showTab("beg")}
 const STARTLV=[["beg",0],["beg",280],["adv",680],["pro",1800]];
-function setStartLevel(n){const p=STARTLV[n];st.plan.level=p[0];st.xp=Math.max(st.xp,p[1]);st.onb=true;st.showAdv=false;save();$("onb").hidden=true;try{planChanged()}catch(e){}renderTrain();drawPlan();applyLevel();if(!$("p-lib").hidden)renderLib();toast("Los geht's! Level "+lvlOf(st.xp)+": "+LVN[lvlOf(st.xp)-1])}
+function setStartLevel(n){const p=STARTLV[n];st.plan.level=p[0];st.xp=Math.max(st.xp,p[1]);st.onb=true;st.showAdv=false;save();$("onb").hidden=true;try{planChanged()}catch(e){}renderTrain();drawPlan();applyLevel();if(!$("p-lib").hidden)renderLib();if(n===0)openWlc();else toast("Los geht's! Level "+lvlOf(st.xp)+": "+LVN[lvlOf(st.xp)-1])}
 function lvselHTML(){return `<h3 style="margin-top:0">Mein Handstand-Level</h3><div class="tabs">${chips([["beg","Anfänger"],["adv","Fortgeschritten"],["pro","Profi"]],st.plan.level,"data-plv")}</div><p class="cap">Das Level bestimmt deinen Trainingsplan. Als Anfänger bleiben Fortgeschrittenen-Übungen in der Bibliothek zunächst ausgeblendet. Es wächst automatisch mit deinem Training.</p>`}
 function nextStep(){for(let i=0;i<STEPS.length;i++)if(tkDone(i)<3)return i;return STEPS.length-1}
-function renderNext(){const i=nextStep(),s=STEPS[i],L=lvlOf(st.xp);$("nxt").innerHTML=`<div class="nx"><div><small>Dein nächster Schritt</small><b>${i+1}. ${esc(s.t)}</b><p>${esc(s.d)}</p></div><button class="pl" data-step="${i}">Ansehen</button></div><div class="bar"><i style="width:${Math.round(tkDone(i)/3*100)}%"></i></div><p class="cap">Aufgaben ${tkDone(i)} von 3 · Level ${L}: ${LVN[L-1]}</p>`}
+function renderNext(){const i=nextStep(),s=STEPS[i],L=lvlOf(st.xp);$("nxt").innerHTML=`<div class="nx"><div class="nxv">${prevSVG(i,84)}</div><div><small>Dein nächster Schritt · ${STL[stepState(i)]}</small><b>${i+1}. ${esc(s.t)}</b><p>${esc(s.d)}</p></div><button class="pl" data-step="${i}">Ansehen</button></div><div class="bar"><i style="width:${Math.round(tkDone(i)/3*100)}%"></i></div><p class="cap">Aufgaben ${tkDone(i)} von 3 · Level ${L}: ${LVN[L-1]}</p>`}
 function renderTip(){const e=$("tip");if(!e)return;const d=new Date(),n=Math.floor((d-new Date(d.getFullYear(),0,0))/864e5);e.innerHTML='<small>Tipp des Tages</small><p>'+esc(DTIPS[n%DTIPS.length])+'</p>'}
 function renderMini(){const ds=weekDates(),td=tdk();$("mini").innerHTML=`<span class="ml"><b>Diese Woche</b><small>${streak()} Tage in Folge</small></span><span class="dots">${ds.map((d,i)=>{const k=dk(d),r=st.days[k],fin=r&&r.fin,tr=isTrain(d);return `<i class="${fin?"ok":tr?"pl":"rs"}${k===td?" now":""}">${WD[i].slice(0,1)}</i>`}).join("")}</span><span class="go">Kalender ›</span>`}
 function renderHero(){const L=lvlOf(st.xp),now=new Date();$("hlv").textContent=`Level ${L} · ${LVN[L-1]}`;if($("hgr"))$("hgr").textContent=(typeof PROFILE!=="undefined"&&PROFILE)?`Hallo, ${PROFILE.name} 👋`:"";let t;if(isTrain(now)){const d=getDay(now);t=d.fin?"Heute geschafft. Stark! 🎉":`Heute: ${d.items.length} Übungen, ca. ${estMin(d.items)} Min.`}else t="Heute ist Ruhetag. Morgen geht's weiter.";const sk=streak();$("hnx").textContent=t+(sk>1?` · ${sk} Tage in Folge`:"")}
