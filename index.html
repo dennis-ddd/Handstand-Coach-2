@@ -214,7 +214,7 @@ input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc)}inp
 @media(prefers-reduced-motion:no-preference){.page:not([hidden]){animation:pg .3s cubic-bezier(.2,.8,.2,1) both}@keyframes pg{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}}
 
 /* ===== Design-Ebene 4: Startseite, kompakter Timer, Onboarding ===== */
-.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:0;align-items:stretch;min-height:272px;padding:22px 0 0 20px;margin:8px 0 12px}
+.hero{display:grid;grid-template-columns:1.1fr .9fr;gap:0;align-items:stretch;min-height:272px;padding:22px 0 0 20px;margin:8px 0 12px}
 .hero-txt{display:flex;flex-direction:column;justify-content:center;padding:0 4px 20px 0;position:relative;z-index:1}
 .eyebrow{display:inline-block;align-self:flex-start;font:700 11.5px var(--fb);letter-spacing:.07em;text-transform:uppercase;background:rgba(255,255,255,.18);color:#fff;border-radius:999px;padding:5px 11px;margin-bottom:12px}
 .hero h1{font-size:29px;line-height:1.08;margin:0 0 8px}.hero p{font-size:14px;opacity:.92;margin:0;max-width:26ch}
@@ -314,12 +314,14 @@ select,input{max-width:100%}
 .sfx{margin:10px 0;padding:10px 12px;border-radius:12px;border:1.5px solid #e0a43a;background:rgba(224,164,58,.14);font-size:13.5px;line-height:1.5}.nox{margin:10px 0;padding:10px 12px;border-radius:12px;border:1.5px solid var(--line);background:rgba(120,140,170,.12);font-size:13.5px;line-height:1.5}#shc h4{margin:12px 0 4px;font-size:13.5px;color:var(--mute)}
 .mtbo{display:flex;gap:8px;align-items:flex-start;font-size:13px;margin:8px 0;color:var(--mute)}.mtbo input{margin-top:3px}
 .stx{padding-left:20px}.stx li{margin:0 0 10px}
+.ci{padding:16px}.ci h3{margin:0 0 4px}.cil{padding-left:18px;margin:10px 0}.cil li{margin:0 0 9px;line-height:1.45}.cibtn{display:block;margin:6px 0;background:none;border:0;color:var(--mute);font-size:13px;padding:6px 0;text-decoration:underline}
+.hero-fig{position:relative}.hcap{position:absolute;top:4px;left:0;right:0;text-align:center;font-size:11px;font-weight:700;opacity:.92;letter-spacing:.02em;pointer-events:none}
 </style></head>
 <body>
 <header class="top"><b>🤸 Handstand-Coach</b><span>Lernen · Trainieren · Verbessern</span></header>
 <main>
 <div class="page" id="p-today">
-<section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-cmgo="file">🎞 Video prüfen</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"></div></section>
+<section class="hero" id="hero"><div class="hero-txt"><span class="hello" id="hgr"></span><span class="eyebrow" id="hlv"></span><h1>Dein Handstand, von der Kamera begleitet.</h1><p id="hnx"></p><div class="hcta"><button class="cta" data-cmgo="pose">📹 Kamera starten</button><button class="ghost" data-cmgo="file">🎞 Video prüfen</button></div></div><div class="hero-fig" id="hfig" aria-hidden="true"><span class="hcap" id="hcap"></span></div></section>
 <div id="intake" class="intake" hidden></div><div class="hs3" id="hs3"></div><div id="hrem"></div>
 <section class="card adapt" id="adapt"></section>
 <div class="qa" role="group" aria-label="Training"><button data-pg="cal"><span class="ti">📅</span>Kalender</button><button data-pg="prog"><span class="ti">📈</span>Fortschritt</button><button data-t="beg"><span class="ti">🌱</span>Lernen</button><button data-pg="lib"><span class="ti">📚</span>Übungen</button></div>
@@ -384,6 +386,8 @@ select,input{max-width:100%}
 <div class="page" id="p-cam" hidden>
 <h1 class="pgt">📹 Kamera</h1>
 <div class="tabs seg" id="cmode"><button data-cm="pose" aria-pressed="true">🎯 Analyse</button><button data-cm="hist" aria-pressed="false">📈 Verlauf</button><button data-cm="prem" aria-pressed="false">⭐ Foto-KI</button></div>
+<button class="cibtn" id="cibtn" data-ci="show" hidden>ℹ Anleitung anzeigen</button>
+<section id="cintro" hidden></section>
 <section id="cview"><div class="pmw" id="pmw"><div class="pmm" id="pmm"><video id="pmv" playsinline muted></video><canvas id="pmc"></canvas></div><div class="mtbig" id="mtbig" aria-hidden="true"></div></div>
 <div class="pmst" id="pmst" role="status" aria-live="polite">Bereit. Tippe auf „Kamera starten“.</div>
 <div class="row"><button class="pl" id="pmb1" data-pm="start">📹 Kamera starten</button><button id="pmb2" data-pm="stop" hidden>Kamera beenden</button><button id="pmb3" data-pm="flip" hidden>Kamera wechseln</button><button id="pmb4" data-pm="retry" hidden>Erkennung erneut starten</button></div></section>
@@ -460,7 +464,7 @@ select,input{max-width:100%}
 const $=id=>document.getElementById(id),NS="http://www.w3.org/2000/svg",reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const Rd=d=>d*Math.PI/180,pol=(o,l,a)=>[o[0]+l*Math.sin(Rd(a)),o[1]-l*Math.cos(Rd(a))];
 const Lm=(a,b,w1,w2)=>{const dx=b[0]-a[0],dy=b[1]-a[1],l=Math.hypot(dx,dy)||1,nx=-dy/l,ny=dx/l;return `M${a[0]+nx*w1} ${a[1]+ny*w1}L${b[0]+nx*w2} ${b[1]+ny*w2}L${b[0]-nx*w2} ${b[1]-ny*w2}L${a[0]-nx*w1} ${a[1]-ny*w1}Z`};
-const leg=(h,k,a,t,w)=>Lm(h,k,w,w*.72)+Lm(k,a,w*.72,w*.5)+Lm(a,t,w*.5,w*.2);
+const leg=(h,k,a,t,w)=>Lm(h,k,w,w*.72)+Lm(k,a,w*.72,w*.5)+Lm(a,t,w*.5,w*.36)+ball(t,w*.36);
 const arm=(w,e,s,x)=>Lm(w,e,x*.55,x*.65)+Lm(e,s,x*.65,x);
 const ball=(p,r)=>`M${p[0]-r} ${p[1]}a${r} ${r} 0 1 0 ${2*r} 0a${r} ${r} 0 1 0 ${-2*r} 0`;
 const ease=p=>p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2;
@@ -470,7 +474,7 @@ const P3=a=>a.map(x=>x.join(",")).join(" ");
 // ---- Seitenansicht
 function fkS(p){const W=[150,368],S=pol(W,96-p[9],p[6]),m=[(W[0]+S[0])/2,(W[1]+S[1])/2],E=[m[0]-p[7]*Math.cos(Rd(p[6])),m[1]-p[7]*Math.sin(Rd(p[6]))];
  const M=pol(S,55,p[0]),H=pol(M,50,p[1]),K=pol(H,62,p[2]),A=pol(K,60,p[3]),K2=pol(H,62,p[4]),A2=pol(K2,60,p[5]);
- return{W,E,S,M,H,K,A,T:pol(A,14,fo(A,p[3],90)),K2,A2,T2:pol(A2,14,fo(A2,p[5],90)),D:pol(S,30,180-p[8])}}
+ return{W,E,S,M,H,K,A,T:pol(A,19,fo(A,p[3],90)),K2,A2,T2:pol(A2,19,fo(A2,p[5],90)),D:pol(S,30,180-p[8])}}
 function drS(f,n){const p=f.cur.slice(),i=f.idle&&!reduce?1:0,sw=Math.sin(n/1100);
  p[2]+=.5*Math.sin(n/900)*i;p[4]+=.5*Math.sin(n/900+1.3)*i;p[0]+=.25*sw*i;const o=fkS(p),q=f.q;
  q(".g").setAttribute("transform",`translate(${p[11]} 368) scale(${p[10]}) rotate(${.25*sw*i}) translate(-150 -368)`);
@@ -489,7 +493,7 @@ function fkF(p,t){const[wx,wy,a,t0,s,lL,sL,lR,sR,f1,f2,w2,two,ws,fs=1]=p,W=[wx,w
  const KL=pol(PL,62,t+lL),AL=pol(KL,60,t+sL),KR=pol(PR,62,t+lR),AR=pol(KR,60,t+sR);
  const ER=[SR[0]+48*Math.sin(Rd(t+f1)),SR[1]+48*Math.cos(Rd(t+f1))],WF=[ER[0]+48*Math.sin(Rd(t+f2)),ER[1]+48*Math.cos(Rd(t+f2))];
  const dx=Math.max(-95,Math.min(95,SR[0]-w2)),WG=[w2,SR[1]+Math.sqrt(9216-dx*dx)],EG=mid(SR,WG),z=two;
- return{W,SL,SR,PL,PR,KL,AL,TL:pol(AL,14,fo(AL,t+sL,-90)),KR,AR,TR:pol(AR,14,fo(AR,t+sR,90)),D:pol(C,32,t+180),EL:mid(W,SL),
+ return{W,SL,SR,PL,PR,KL,AL,TL:pol(AL,19,fo(AL,t+sL,-90)),KR,AR,TR:pol(AR,19,fo(AR,t+sR,90)),D:pol(C,32,t+180),EL:mid(W,SL),
   WR:[WF[0]+(WG[0]-WF[0])*z,WF[1]+(WG[1]-WF[1])*z],ER:[ER[0]+(EG[0]-ER[0])*z,ER[1]+(EG[1]-ER[1])*z]}}
 function comF(o){return MS([[o.D,8.1],[mid(mid(o.SL,o.SR),mid(o.PL,o.PR)),49.7],[mid(o.EL,o.SL),2.8],[mid(o.W,o.EL),2.2],[mid(o.ER,o.SR),2.8],[mid(o.WR,o.ER),2.2],...legM(o.PL,o.KL,o.AL,o.TL),...legM(o.PR,o.KR,o.AR,o.TR)])}
 function solveF(p){const g=t=>{const o=fkF(p,t);return comF(o)[0]-(o.W[0]+p[13]*(o.WR[0]-o.W[0]))};let lo=-40,hi=40;if(g(lo)>0)return lo;if(g(hi)<0)return hi;for(let i=0;i<14;i++){const m=(lo+hi)/2;g(m)<0?lo=m:hi=m}return(lo+hi)/2}
@@ -1144,9 +1148,79 @@ function nextStep(){for(let i=0;i<STEPS.length;i++)if(tkDone(i)<3)return i;retur
 function renderNext(){const i=nextStep(),s=STEPS[i],L=lvlOf(st.xp);$("nxt").innerHTML=`<div class="nx"><div><small>Dein nächster Schritt</small><b>${i+1}. ${esc(s.t)}</b><p>${esc(s.d)}</p></div><button class="pl" data-step="${i}">Ansehen</button></div><div class="bar"><i style="width:${Math.round(tkDone(i)/3*100)}%"></i></div><p class="cap">Aufgaben ${tkDone(i)} von 3 · Level ${L}: ${LVN[L-1]}</p>`}
 function renderMini(){const ds=weekDates(),td=tdk();$("mini").innerHTML=`<span class="ml"><b>Diese Woche</b><small>${streak()} Tage in Folge</small></span><span class="dots">${ds.map((d,i)=>{const k=dk(d),r=st.days[k],fin=r&&r.fin,tr=isTrain(d);return `<i class="${fin?"ok":tr?"pl":"rs"}${k===td?" now":""}">${WD[i].slice(0,1)}</i>`}).join("")}</span><span class="go">Kalender ›</span>`}
 function renderHero(){const L=lvlOf(st.xp),now=new Date();$("hlv").textContent=`Level ${L} · ${LVN[L-1]}`;if($("hgr"))$("hgr").textContent=(typeof PROFILE!=="undefined"&&PROFILE)?`Hallo, ${PROFILE.name} 👋`:"";let t;if(isTrain(now)){const d=getDay(now);t=d.fin?"Heute geschafft. Stark! 🎉":`Heute: ${d.items.length} Übungen, ca. ${estMin(d.items)} Min.`}else t="Heute ist Ruhetag. Morgen geht's weiter.";const sk=streak();$("hnx").textContent=t+(sk>1?` · ${sk} Tage in Folge`:"")}
-let heroF=null,heroI=0;const HSEQ=[[0,1500],[1,1500],[2,1500],[3,1400],[4,2800]];
-function heroStart(){if(heroF||!$("hfig"))return;const fr=SW.map(a=>{const b=a.slice();b[10]=.82;b[11]=185;return b});heroF=mk($("hfig"),"S",fr[0]);heroF.com=false;
- const step=()=>{const h=HSEQ[heroI];heroF.go(fr[h[0]],h[0]===0?600:1200);heroI=(heroI+1)%HSEQ.length;setTimeout(step,h[1])};setTimeout(step,900)}
+/* ---- Start-Animation: Seitenansicht mit gestreckten/gebeugten Füßen, mehrere Bewegungen ---- */
+const HN=(function(){
+ const R=d=>d*Math.PI/180,pl=(o,l,a)=>[o[0]+l*Math.sin(R(a)),o[1]-l*Math.cos(R(a))];
+ const LA=96,TR1=52,TR2=53,TH=62,SH=60,FT=26,W=[176,366];
+ const bi=(a,b,t)=>a+(b-a)*t;
+ function legPos(H,th,r,s){ // Ankel-Ziel aus Richtung th und Streckung r; Knie nach vorn (Brustseite)
+  const L=TH+SH,d=Math.max(Math.min(L*r,L-.01),Math.abs(TH-SH)+1);
+  const al=Math.acos(Math.max(-1,Math.min(1,(TH*TH+d*d-SH*SH)/(2*TH*d))));
+  const K=pl(H,TH,th-s*al*180/Math.PI),A=pl(H,d,th);return{K,A}}
+ function fk(p){
+  const S=pl(W,LA,p.a),E0=[(W[0]+S[0])/2,(W[1]+S[1])/2],nx=Math.cos(R(p.a)),ny=Math.sin(R(p.a)),E=[E0[0]+nx*p.e,E0[1]+ny*p.e];
+  const M=pl(S,TR1,p.t+p.c),H=pl(M,TR2,p.t),D=pl(S,30,p.t+180+p.hd);
+  const mkLeg=(th,r,pf,fl)=>{const q=legPos(H,th,r,1),sh=Math.atan2(q.A[0]-q.K[0],-(q.A[1]-q.K[1]))*180/Math.PI;
+   let ta=sh-pf;ta=fl>0?ta+((((90-ta+540)%360)-180)*fl):ta;
+   return{K:q.K,A:q.A,T:pl(q.A,FT,ta),ta:ta}};
+  return{S,E,M,H,D,L1:mkLeg(p.th1,p.r1,p.pf1,p.w1),L2:mkLeg(p.th2,p.r2,p.pf2,p.w2)}}
+ const P=o=>Object.assign({a:0,e:0,t:0,c:0,hd:0,th1:0,r1:1,pf1:0,w1:0,th2:0,r2:1,pf2:0,w2:0},o);
+ // Hilfsfunktion: Pose so wählen, dass der Knöchel eines Beins auf dem Boden steht
+ function ground(base,which,ax,ay,pf,w){const o=P(base),f=fk(o),H=f.H,dx=ax-H[0],dy=ay-H[1],d=Math.hypot(dx,dy),th=Math.atan2(dx,-dy)*180/Math.PI;
+  o["th"+which]=th;o["r"+which]=Math.min(1,d/(TH+SH));o["pf"+which]=pf;o["w"+which]=w==null?0:w;return o}
+ // ----- Bewegungsfolgen -----
+ const HS=P({}),HSP={pf1:0,pf2:0};
+ const start=P({a:12,t:-66,c:6,hd:-8,e:0}); // Lauf-/Ausfallposition
+ const k0=ground(start,1,132,356,100,1);k0.th2=-136;k0.r2=1;k0.pf2=0;
+ const k1=P({a:9,t:-50,c:4,hd:-6,th1:-166,r1:.9,pf1:70,w1:0,th2:-108,r2:1,pf2:0});
+ const k1g=ground(k1,1,138,352,60,.3);k1.th1=k1g.th1;k1.r1=k1g.r1;k1.pf1=60;k1.w1=.3;
+ const k2=P({a:5,t:-28,c:2,hd:-3,th1:-128,r1:.97,pf1:25,th2:-34,r2:1,pf2:0});
+ const k3=P({a:1,t:-6,c:-2,hd:0,th1:-12,r1:1,pf1:0,th2:-5,r2:1,pf2:0});
+ const hold=P({a:0,t:0,hd:0,th1:-2,r1:1,pf1:0,th2:2,r2:1,pf2:0});
+ const tuck=P({a:0,t:3,c:-4,hd:6,th1:-132,r1:.56,pf1:28,th2:-150,r2:.52,pf2:28});
+ const split=P({a:0,t:0,hd:2,th1:-50,r1:1,pf1:0,th2:48,r2:1,pf2:0});
+ const flex=P({a:0,t:0,hd:0,th1:-4,r1:1,pf1:80,th2:4,r2:1,pf2:80});
+ const sway1=P({a:-1,t:-3,th1:-5,th2:0,r1:1,r2:1}),sway2=P({a:1,t:3,th1:0,th2:5,r1:1,r2:1});
+ const SEQ=[
+  {cap:"Schwung in den Handstand",f:[[k0,0,900],[k1,520,0],[k2,460,0],[k3,430,0],[hold,520,900],[k3,520,0],[k2,560,0],[k0,720,500]]},
+  {cap:"Füße strecken statt anwinkeln",f:[[hold,900,300],[flex,700,1000],[hold,700,1100]]},
+  {cap:"Hocke im Handstand",f:[[hold,700,300],[tuck,950,900],[hold,950,700]]},
+  {cap:"Spagat im Handstand",f:[[hold,700,300],[split,1100,1100],[hold,1000,600]]},
+  {cap:"Balance über die Finger",f:[[hold,700,0],[sway1,900,0],[sway2,1100,0],[sway1,1100,0],[hold,900,500]]}];
+ function drawTo(g,f,pose){
+  const o=fk(pose),ln=(a,b,w,c,op)=>`<path d="M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}" stroke="${c||'var(--c)'}" stroke-width="${w}" stroke-linecap="round" fill="none" ${op?'opacity="'+op+'"':''}/>`;
+  const pl2=(a,b,c,w,col,op)=>ln(a,b,w,col,op)+ln(b,c,w*.78,col,op);
+  const leg=(L,col,op)=>pl2(o.H,L.K,L.A,19,col,op)+`<circle cx="${L.A[0].toFixed(1)}" cy="${L.A[1].toFixed(1)}" r="7" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`+ln(L.A,L.T,11,col,op)+`<circle cx="${L.T[0].toFixed(1)}" cy="${L.T[1].toFixed(1)}" r="5" fill="${col||'var(--c)'}" ${op?'opacity="'+op+'"':''}/>`;
+  const far='var(--c2)';
+  g.innerHTML=leg(o.L2,far)+
+   ln(o.S,o.M,25,far,.0)+
+   ln(o.S,o.M,26)+ln(o.M,o.H,23)+
+   leg(o.L1)+
+   ln(W,[W[0]+22,W[1]+2],8)+
+   ln(W,o.E,13)+ln(o.E,o.S,14)+
+   `<circle cx="${o.D[0].toFixed(1)}" cy="${o.D[1].toFixed(1)}" r="15" fill="var(--c)"/>`}
+ function mount(host,capEl){
+  const ns="http://www.w3.org/2000/svg",s=document.createElementNS(ns,"svg");s.setAttribute("viewBox","0 6 300 394");s.setAttribute("role","img");s.setAttribute("aria-label","Animation: Schwung in den Handstand und Handstand-Variationen");
+  s.innerHTML='<ellipse cx="176" cy="373" rx="86" ry="6" fill="rgba(0,0,0,.22)"/><rect x="10" y="372" width="280" height="3" rx="1.5" fill="var(--c2)" opacity=".6"/><g class="hg"></g>';
+  host.appendChild(s);const g=s.querySelector(".hg");
+  const ez=t=>t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2;
+  let cur=P({}),si=0,fi=0,from=cur,to=cur,t0=0,dur=1,holdT=0,state="go";
+  if(typeof reduce!=="undefined"&&reduce){drawTo(g,0,hold);if(capEl)capEl.textContent="Handstand";return}
+  const setCap=()=>{if(capEl)capEl.textContent=SEQ[si].cap};
+  function nextKey(n){const q=SEQ[si].f;if(fi>=q.length){si=(si+1)%SEQ.length;fi=0;setCap()}const k=SEQ[si].f[fi++];from=cur;to=k[0];dur=Math.max(1,k[1]);holdT=k[2];t0=n;state="go"}
+  setCap();cur=SEQ[0].f[0][0];from=to=cur;nextKey(performance.now());
+  function frame(n){if(!s.isConnected){return}
+   if(s.parentElement.offsetParent){
+    if(state==="go"){const t=Math.min(1,(n-t0)/dur),e=ez(t);const o={};for(const k in to)o[k]=bi(from[k],to[k],e);cur=o;if(t>=1){state="hold";t0=n}}
+    else if(n-t0>=holdT){nextKey(n)}
+    const sw=(si>0||fi>3&&fi<7)?Math.sin(n/600)*0.9:0,o2=Object.assign({},cur);o2.a+=sw*.5;o2.th1+=sw;o2.th2-=sw*.6;
+    drawTo(g,0,o2)}
+   requestAnimationFrame(frame)}
+  requestAnimationFrame(frame);return s}
+ return{mount,fk,P,SEQ,drawTo,hold,bi}
+})();
+
+let heroF=null;function heroStart(){if(heroF||!$("hfig"))return;heroF=HN.mount($("hfig"),$("hcap"))}
 if(!st.onb&&(st.xp>0||st.done>0)){st.onb=true;save()}
 
 // ======== Profil (Name + Alter) ========
@@ -1440,7 +1514,8 @@ async function anFile(f){if(PS.running)pmStop(true);setCamMode("pose");ANS.fileM
 function anExport(){try{const o={app:"handstand",version:1,note:"Landmarks [x,y,visibility] je Bild, r=1 bei gedrehtem Bild",stat:ANS.stat,frames:ANS.log};const b=new Blob([JSON.stringify(o)],{type:"application/json"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="handstand-messdaten.json";document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(u),2000)}catch(e){toast("Export fehlgeschlagen.")}}
 function anStop(){const A=ANS.an;if(A&&A.hold){const e=A.endHold(performance.now(),"Kamera beendet");if(e&&e.type==="end"){anRecStop(e.rec);anFinish(e.rec)}else anRecStop(null)}else anRecStop(null);try{speechSynthesis.cancel()}catch(e){}const pv=$("pmv");if(pv&&pv.getAttribute("src")){pv.pause();pv.removeAttribute("src");try{pv.load()}catch(e){}}ANS.an=null;ANS.fileMode=false;if($("ancue")){anCue("","")}}
 document.addEventListener("change",e=>{if(e.target&&e.target.id==="mtbonus"){GM.store.bonus=e.target.checked;mtSave();mtRenderLv()}});
-document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;if(d.cmgo){if(d.cmgo==="file"){goCam("pose");const f=$("anvf");if(f)f.click()}else goCam(d.cmgo);return}if(d.mt==="go"){mtGo();return}if(d.mtlv){mtSelect(+d.mtlv);return}if(d.ancmp)anCompare();else if(d.andel){if(b.dataset.sure){anSaveAtt([]);try{indexedDB.deleteDatabase("hs-vid")}catch(x){}anAttList()}else{b.dataset.sure=1;b.textContent="Wirklich alle löschen? Nochmal tippen"}}else if(d.anvid)anPlay(d.anvid)});
+document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const d=b.dataset;if(d.ci){if(d.ci==="go"){const m=d.cim;CI.ok[m]=true;const sk=$("cisk");if(sk&&sk.checked){try{const o=JSON.parse(localStorage.getItem("hs-ci-v1")||"{}");o[m]=1;localStorage.setItem("hs-ci-v1",JSON.stringify(o))}catch(x){}}setCamMode(m)}else if(d.ci==="show"){CI.ok[CI.cur]=false;try{const o=JSON.parse(localStorage.getItem("hs-ci-v1")||"{}");delete o[CI.cur];localStorage.setItem("hs-ci-v1",JSON.stringify(o))}catch(x){}setCamMode(CI.cur)}else if(d.ci==="file"){CI.ok.pose=true;setCamMode("pose");const f=$("anvf");if(f)f.click()}return}
+if(d.cmgo){if(d.cmgo==="file"){CI.ok.pose=true;goCam("pose");const f=$("anvf");if(f)f.click()}else goCam(d.cmgo);return}if(d.mt==="go"){mtGo();return}if(d.mtlv){mtSelect(+d.mtlv);return}if(d.ancmp)anCompare();else if(d.andel){if(b.dataset.sure){anSaveAtt([]);try{indexedDB.deleteDatabase("hs-vid")}catch(x){}anAttList()}else{b.dataset.sure=1;b.textContent="Wirklich alle löschen? Nochmal tippen"}}else if(d.anvid)anPlay(d.anvid)});
 /* ===== Handstand-Match (reine Logik) ===== */
 var MT=(function(){
 var I={nose:0,ls:11,rs:12,le:13,re:14,lw:15,rw:16,lh:23,rh:24,lk:25,rk:26,la:27,ra:28,lf:31,rf:32};
@@ -1537,7 +1612,15 @@ function mtEnd(){var r=GM.round.result(),id=GM.lv,old=GM.store.lv[id]||{s:0,p:0}
  var next=id<MT.LEVELS.length&&r.stars>=1&&mtVis(MT.LEVELS[id])&&!MT.LEVELS[id].bonus;
  $("mtres").innerHTML='<div class="card mtr"><div class="mtstars">'+mtStarStr(r.stars)+'</div><b>'+(r.stars===3?"Perfekt!":r.stars>=1?"Geschafft!":"Noch nicht ganz")+'</b><p>'+r.points+' Punkte · beste Übereinstimmung '+r.best+' %'+(old.s?' · Rekord: '+GM.store.lv[id].s+' Sterne, '+GM.store.lv[id].p+' Punkte':'')+'</p>'+(r.stars===0?'<p class="cap">Für den ersten Stern musst du die Pose etwa 2 Sekunden lang zu mindestens 60 % halten. Achte auf eine seitliche Position und den ganzen Körper im Bild.</p>':'')+'<div class="row"><button class="pl" data-mt="go">Nochmal</button>'+(next?'<button data-mtlv="'+(id+1)+'">Nächstes Level</button>':'')+'</div></div>';
  anSpeak(r.stars===3?"Perfekt! Drei Sterne.":r.stars>=1?"Geschafft! "+r.stars+(r.stars===1?" Stern.":" Sterne."):"Noch nicht ganz. Versuch es nochmal.");mtRenderLv()}
-function setCamMode(m){var modes=["pose","match","hist","prem"];if(modes.indexOf(m)<0)m="pose";
+const CI={ok:{},cur:"pose"};
+function ciSkip(m){try{return !!(JSON.parse(localStorage.getItem("hs-ci-v1")||"{}")[m])}catch(e){return false}}
+const CIT={pose:{t:"So funktioniert die Handstand-Analyse",sub:"Bevor die Kamera startet, hier kurz, was passiert:",l:["<b>Handy aufstellen:</b> Stelle es fest und gerade etwa 2 bis 3 Meter seitlich von dir auf, am besten angelehnt.","<b>Ganz im Bild:</b> Vom Handgelenk bis zu den Füßen sollst du sichtbar sein. Gutes Licht hilft.","<b>Kamera erlauben:</b> Dein Handy fragt beim ersten Start nach der Erlaubnis. Erst dann geht die Kamera an.","<b>Deine Daten bleiben bei dir:</b> Das Bild wird auf deinem Gerät ausgewertet und nicht hochgeladen.","<b>Sicherheit:</b> Übe nur auf sicherem Untergrund, mit Wand oder Betreuung. Die Analyse ersetzt keine Trainerin und keinen Trainer."],btn:"Verstanden, weiter",alt:true},
+ match:{t:"So funktioniert Handstand-Match",sub:"Ein kleines Spiel: Du machst eine Pose nach, die Kamera vergleicht sie.",l:["<b>Pose nachmachen:</b> Eine Figur zeigt dir die Zielpose. Je ähnlicher du bist, desto mehr Punkte.","<b>Handy aufstellen:</b> Seitlich zu dir, ganzer Körper im Bild.","<b>Kein Leistungsdruck:</b> Es zählt die Ähnlichkeit, nicht wie beweglich du bist. Bei unsicherer Erkennung gibt es keine Punkte.","<b>Bonuslevel:</b> Die schwierigen Handstand-Posen erscheinen nur, wenn du sie freischaltest, am besten mit Trainingsfreigabe.","<b>Kamera erlauben:</b> Erst wenn du ein Level startest, fragt dein Handy nach dem Kamerazugriff. Das Bild bleibt auf deinem Gerät."],btn:"Verstanden, weiter",alt:false}};
+function ciShow(m){const c=CIT[m],e=$("cintro");e.hidden=false;
+ e.innerHTML='<div class="card ci"><h3>'+c.t+'</h3><p class="cap">'+c.sub+'</p><ul class="cil">'+c.l.map(x=>"<li>"+x+"</li>").join("")+'</ul><label class="mtbo"><input type="checkbox" id="cisk"> Diese Erklärung beim nächsten Mal überspringen</label><div class="row"><button class="pl" data-ci="go" data-cim="'+m+'">'+c.btn+'</button>'+(c.alt?'<button class="ghost" data-ci="file">🎞 Lieber ein Video aus der Galerie prüfen</button>':"")+'</div></div>'}
+function setCamMode(m){var modes=["pose","match","hist","prem"];if(modes.indexOf(m)<0)m="pose";CI.cur=m;
+ if((m==="pose"||m==="match")&&!CI.ok[m]&&!ciSkip(m)){try{pmStop(true)}catch(e){}try{camStopClaude()}catch(e){}["cpose","cmatch","chist","cprem","cview"].forEach(function(i){$(i).hidden=true});$("cibtn").hidden=true;$$("#cmode [data-cm]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.cm===m)});ciShow(m);return}
+ $("cintro").hidden=true;$("cibtn").hidden=!(m==="pose"||m==="match");
  $("cpose").hidden=m!=="pose";$("cmatch").hidden=m!=="match";$("chist").hidden=m!=="hist";$("cprem").hidden=m!=="prem";$("cview").hidden=!(m==="pose"||m==="match");
  $$("#cmode [data-cm]").forEach(function(b){b.setAttribute("aria-pressed",b.dataset.cm===m)});
  if(m==="prem"||m==="hist"){pmStop(true);if(m==="hist")anAttList();if(m==="prem")renderCam()}else camStopClaude();
